@@ -1,0 +1,71 @@
+<script>
+
+    // v2 loop
+    window.addEventListener("load", () => {
+    
+    
+        //const thumbImage = document.querySelector(".thumb img");
+        //const thumbTitle = thumbImage.getAttribute("title");
+        //const thumbLink = document.querySelector(".location_banner").getAttribute("data-link");
+    
+        const slideInner = document.querySelector(".slide_inner");
+    
+        const thumbSlide = document.createElement("div");
+        thumbSlide.classList.add("thumb-slide");
+    
+        slideInner.appendChild(thumbSlide);
+        
+        $('.location_mySlides').each(function (){
+            
+            var thumb_image = $(this).find(".thumb img").attr("src");
+            var thumb_title = $(this).find(".thumb img").attr("title");
+            var thumb_link = $(this).find(".location_banner").attr('data-link');
+            
+    
+        const showMainSlide = `
+            <div class="dynamic_slide_item">
+                <div class="image-bg-div" style="background:url(${thumb_image});">
+                    <p class="h4 main_title" color="#333">${thumb_title}</p>
+                    <a class="ctalink go-button" href="${thumb_link}">Go</a>
+                </div>
+            </div>
+        `;
+    
+        slideInner.innerHTML = showMainSlide;
+        
+        });
+        
+        //document.getElementsByClassName('location_banner')[0].classList.add('active');
+        
+    });
+
+
+</script>
+
+<div class="banner-row location-banner title-[[+title_color]] highlight-[[+titleBackground]] [[+class]]">
+    <!--<div class="background active" style="background-image:url('[[+background]]');"></div>-->
+    <div class="location_dots" ></div>
+    [[+overlay:eq=`yes`:then=`<div class="overlay"></div>`]]
+    <div 
+        class="constrainer12 image_slider slider-container" 
+        style="overflow: hidden;"
+        data-autostart="[[+autostart]]"
+        >
+        [[+row_content]]
+    </div>
+    
+    
+    <section class="custom_thumbnail_carousel_wrapper">
+        
+        <div class="custom_location_carousel_wrapper">
+            <div class="custom_location_thumbnail">
+                <div class="slide_inner">
+                    
+                </div>
+             </div>
+        </div>
+
+    </section>
+</div>
+    
+    

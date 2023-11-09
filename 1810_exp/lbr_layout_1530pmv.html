@@ -1,0 +1,90 @@
+<script>
+    var LslideIndex = 1;
+    var myTimerNew;
+    var slideshowContainer;
+    var $Li = 1;
+    var $nextLoc = 1;
+    var $prevLoc = -1;
+    var thumbimage;
+    var thumb_img;
+    var thumb_title;
+    var thumb_cta;
+    var Imagearr = [];
+    var index_id;
+    
+    window.addEventListener("load", function() {
+        
+        $('.location_mySlides').each(function (index){
+            
+            // get modx data
+            thumb_img = $(this).find(".thumb img").attr("src");
+            thumb_title = $(this).find(".thumb img").attr("title");
+            thumb_cta = $(this).find(".location_banner").attr('data-link');
+            
+            let titleDiv = document.createElement("div");
+            titleDiv.textContent = thumb_title;
+            titleDiv.setAttribute('class', 'thumb-title');
+            titleDiv.setAttribute('title', thumb_title);
+            titleDiv.setAttribute('onclick', 'currentSlide(' + $Li + ')');
+            titleDiv.setAttribute('index', $Li);
+            $('custom_location_thumbnail').append(titleDiv);
+            
+            let ctaDiv = document.createElement("div");
+            ctaDiv.innerHTML = "<a href='" + thumb_cta +"'><span>Go</span><i class='fa fa-arrow-right' aria-hidden='true'></i></a>";
+            ctaDiv.setAttribute('class', 'cta_link font_bold');
+            ctaDiv.setAttribute('index', $Li);
+            $('custom_location_thumbnail').append(ctaDiv);
+            
+            $(".custom_location_thumbnail").append($('<img alt="Location" index="' + $Li + '" title="' + thumb_title + '" onclick="currentSlide(' + $Li + ')" class="ThumbImgList" src="' + thumb_img + '">'));
+            
+            $Li++
+        });
+        
+        let imgParent = document.createElement("div");
+        imgParent.setAttribute('class', 'img_parent');
+        $('.custom_location_thumbnail > img').wrap(imgParent);
+        
+        $('.thumb-title').each(function(index) {
+           let thumbtitle = $(this);
+           let thumblink = $(this).next('.cta_link');
+           let thumbparent = thumblink.next('.img_parent');
+          
+           thumbtitle.addClass(`carousel-item-${index}`);
+           thumblink.addClass(`carousel-item-${index}`);
+           thumbparent.addClass(`carousel-item-${index}`);
+
+           $(`.carousel-item-${index}`).wrapAll(`<div class="thumbWrapper carousel-item-${index}" />`);
+             
+        });
+        
+    })
+</script>
+
+<div class="banner-row location-banner title-[[+title_color]] highlight-[[+titleBackground]] [[+class]]">
+    <!--<div class="background active" style="background-image:url('[[+background]]');"></div>-->
+    <div class="location_dots" ></div>
+    [[+overlay:eq=`yes`:then=`<div class="overlay"></div>`]]
+    <div 
+        class="constrainer12 image_slider slider-container" 
+        style="overflow: hidden;"
+        data-autostart="[[+autostart]]"
+        >
+        [[+row_content]]
+    </div>
+    
+    
+<section class="custom_thumbnail_carousel_wrapper">
+    
+<div class="custom_location_carousel_wrapper">
+    <div class="custom_location_thumbnail">
+     </div>
+</div>
+
+   <div class="button_wrapper">
+    <div class="button_wrapper_prev"></div>
+<div class="button_wrapper_next"></div>
+   </div>
+  </section>
+</div>
+    
+    

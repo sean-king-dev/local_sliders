@@ -1,0 +1,114 @@
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+
+        // main slider
+        $(".main_fade_slide").each(function () {
+
+// const images = document.querySelectorAll('.main_slide_item');
+// let currentImageIndex = 0;
+
+// function showNextImage() {
+//     images[currentImageIndex].classList.remove('active');
+//     currentImageIndex = (currentImageIndex + 1) % images.length;
+//     images[currentImageIndex].classList.add('active');
+// }
+
+// images[currentImageIndex].classList.add('active');
+
+// setInterval(showNextImage, 3000);
+})
+
+// thumbnail slider
+let slideInner = document.querySelector(".test-slides-container");
+// let slideInner = document.querySelector(".slider-inner");
+
+$(".hidden_thumb_slide").each(function (index) {
+thumb_image = $(this).find(".thumb img").attr("src");
+thumb_title = $(this).find(".title p.h4 img").attr("title");
+thumb_link = $(this).find(".thumb_link").attr('data-link');
+
+let showMainSlide = `
+    <div class="test-slide" data-slideindex=${index}>
+        <div class="ThumbImgTop_Pointer thumbnail_show_pin"></div>
+        <div class="image-bg-div" style="background:url(${thumb_image});">
+            <p class="h4 main_title">${thumb_title}</p>
+            <a href="${thumb_link}" class="ctalink go-button thumbnail_show_button" href="${thumb_link}"><span>Go</span><i class="fa fa-arrow-right"></i></a>
+        </div>
+    </div>
+`;
+
+slideInner.innerHTML += showMainSlide;
+
+});
+
+        // Main slider and thumbnail carousel
+        const mainImages = document.querySelectorAll('.main_slide_item');
+        const thumbImages = document.querySelectorAll('.test-slide');
+        let currentImageIndex = 0;
+        let currentThumbImageIndex = 0;
+
+        function showNextImage() {
+            mainImages[currentImageIndex].classList.remove('active');
+            thumbImages[currentThumbImageIndex].classList.remove('active');
+
+            currentImageIndex = (currentImageIndex + 1) % mainImages.length;
+            currentThumbImageIndex = (currentThumbImageIndex + 1) % thumbImages.length;
+
+            mainImages[currentImageIndex].classList.add('active');
+            thumbImages[currentThumbImageIndex].classList.add('active');
+        }
+
+        mainImages[currentImageIndex].classList.add('active');
+        thumbImages[currentThumbImageIndex].classList.add('active');
+
+        setInterval(showNextImage, 3000);
+
+        // Manual and auto buttons for both sliders
+        const slidesContainer = document.getElementById("test-slides-container");
+        const slide = document.querySelector(".test-slide");
+        const prevButton = document.getElementById("test-slide-arrow-prev");
+        const nextButton = document.getElementById("test-slide-arrow-next");
+
+        nextButton.addEventListener("click", () => {
+            goToSlide(currentImageIndex + 1);
+        });
+
+        prevButton.addEventListener("click", () => {
+            goToSlide(currentImageIndex - 1);
+        });
+
+        function nextSlide() {
+            goToSlide(currentImageIndex + 1);
+        }
+
+        function goToSlide(slideIndex) {
+            currentImageIndex = slideIndex;
+
+            if (currentImageIndex < 0) {
+                currentImageIndex = mainImages.length - 1;
+            } else if (currentImageIndex >= mainImages.length) {
+                currentImageIndex = 0;
+            }
+
+            const slideWidth = slide.clientWidth;
+            slidesContainer.scrollLeft = currentImageIndex * slideWidth;
+        }
+
+        let autoPlayInterval = setInterval(() => {
+            nextSlide();
+        }, 3000);
+
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(() => {
+                nextSlide();
+            }, 3000);
+        }
+
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+
+        slidesContainer.addEventListener("mouseover", stopAutoPlay);
+        slidesContainer.addEventListener("mouseout", startAutoPlay);
+    });
+</script>

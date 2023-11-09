@@ -1,0 +1,71 @@
+<script>
+    window.addEventListener("load", function() {
+
+        
+        // main slider
+        // $(".main_fade_slide").each(function () {
+
+        // const images = document.querySelectorAll('.main_slide_item');
+        // let currentImageIndex = 0;
+
+        // function showNextImage() {
+        //     images[currentImageIndex].classList.remove('active');
+        //     currentImageIndex = (currentImageIndex + 1) % images.length;
+        //     images[currentImageIndex].classList.add('active');
+        // }
+
+        // images[currentImageIndex].classList.add('active');
+
+        // setInterval(showNextImage, 3000);
+        // })
+
+         // thumbnail slider
+         let slideInner = document.querySelector(".owl-two");
+        //  let slideInner = document.querySelector(".test-slides-container");
+
+        // let slideInner = document.querySelector(".slider-inner");
+
+        $(".hidden_thumb_slide").each(function (index) {
+            thumb_image = $(this).find(".thumb img").attr("src");
+            thumb_title = $(this).find(".title p.h4 img").attr("title");
+            thumb_link = $(this).find(".thumb_link").attr('data-link');
+
+            let showMainSlide = `
+                <div class="test-slide" data-slideindex=${index}>
+                    <div class="ThumbImgTop_Pointer thumbnail_show_pin"></div>
+                    <div class="image-bg-div" style="background:url(${thumb_image});">
+                        <p class="h4 main_title">${thumb_title}</p>
+                        <a href="${thumb_link}" class="ctalink go-button thumbnail_show_button" href="${thumb_link}"><span>Go</span><i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            `;
+
+            slideInner.innerHTML += showMainSlide;
+
+        });
+
+        $('.owl-two').owlCarousel({
+            rtl:false,
+            loop:true,
+            margin:0,
+            nav:true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:3
+                },
+                1000:{
+                    items:10
+                }
+            },
+            
+        })
+
+       
+
+    });
+</script>

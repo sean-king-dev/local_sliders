@@ -1,0 +1,99 @@
+<script>
+    window.addEventListener("load", function() {
+        let slideInner = document.querySelector(".owl-two");
+        const thumbImages = document.querySelectorAll('.test-slide');
+        const thumbnailContainer = document.querySelector('.owl-two');
+
+        // Add a class to the initially active slide
+        thumbImages[0].classList.add('active-slide-here');
+
+        // Set up the thumbnail carousel
+        $(".hidden_thumb_slide").each(function (index) {
+            // ... Your existing code for creating thumbnail slides ...
+
+            // Add a data attribute for the corresponding main slide index
+            thumbImages[index].setAttribute('data-main-slide-index', index);
+        });
+
+        // Initialize the main carousel
+        const mainCarousel = $('.owl-two').owlCarousel({
+            items: 1,
+            rtl: false,
+            loop: true,
+            margin: 0,
+            nav: true,
+            navText: ["<div class='nav-btn prev-slide'>&#8249;</div>", "<div class='nav-btn next-slide'>&#8250;</div>"],
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 8
+                },
+                1000: {
+                    items: 10
+                }
+            },
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+        });
+
+        mainCarousel.on('changed.owl.carousel', function(e) {
+            // Get the current slide index
+            const currentSlideIndex = e.item.index;
+
+            // Remove the 'active-slide-here' class from all main slides
+            thumbImages.forEach((thumbImage) => {
+                thumbImage.classList.remove('active-slide-here');
+            });
+
+            // Add the 'active-slide-here' class to the current main slide
+            thumbImages[currentSlideIndex].classList.add('active-slide-here');
+
+            // Ensure that the 'active-hide-here' slide is in the visible part of the carousel
+            const activeHideIndex = thumbImages.findIndex(thumbImage => thumbImage.classList.contains('active-hide-here'));
+            if (activeHideIndex >= 0) {
+                // Calculate the main slide index corresponding to the 'active-hide-here' slide
+                const mainSlideIndex = parseInt(thumbImages[activeHideIndex].getAttribute('data-main-slide-index'));
+                // Go to the corresponding main slide
+                mainCarousel.trigger('to.owl.carousel', mainSlideIndex);
+            }
+        });
+
+        // Class to handle automatic sliding of main carousel
+        class AutoSlider {
+            constructor(selector, interval) {
+                this.elements = document.querySelectorAll(selector);
+                this.interval = interval;
+                this.currentIndex = 0;
+
+                this.startAutoSlide();
+            }
+
+            startAutoSlide() {
+                if (this.elements.length === 0) {
+                    return; // No elements to slide
+                }
+
+                this.activateSlide(this.currentIndex);
+
+                setInterval(() => {
+                    this.currentIndex = (this.currentIndex + 1) % this.elements.length;
+                    this.activateSlide(this.currentIndex);
+                }, this.interval);
+            }
+
+            activateSlide(index) {
+                for (let i = 0; i < this.elements.length; i++) {
+                    this.elements[i].classList.remove("active-slide");
+                }
+
+                this.elements[index].classList.add("active-slide");
+            }
+        }
+
+        // Usage
+        new AutoSlider(".owl-item", 3000);
+    });
+</script>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Styles for the slider and thumbnails */
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-slide {
+            border: 2px solid green;
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .main-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail-carousel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .thumbnail-carousel {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .thumbnail-item {
+            width: calc(100% / 8);
+            cursor: pointer;
+        }
+
+        .thumbnail-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Styles for navigation buttons */
+        #prevBtn, #nextBtn, #prevThumbBtn, #nextThumbBtn {
+            margin: 10px;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <div class="main-slide">
+            <!-- Full-screen image goes here -->
+        </div>
+        <div class="thumbnail-carousel-container">
+            <div class="thumbnail-carousel">
+                <!-- Thumbnails go here -->
+            </div>
+            <button id="prevThumbBtn">Previous</button>
+            <button id="nextThumbBtn">Next</button>
+        </div>
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next</button>
+    </div>
+
+    <script>
+        const locations = [
+            {
+                id: '1',
+                title: 'Oxford',
+                image: 'https://placehold.co/1920x1080?text=Oxford',
+                ctaLink: 'https://en.wikipedia.org/wiki/Oxford'
+            },
+            {
+                id: '2',
+                title: 'Hove',
+                image: 'https://placehold.co/1920x1080?text=Hove',
+                ctaLink: 'https://en.wikipedia.org/wiki/Hove'
+            },
+            {
+                id: '3',
+                title: 'London',
+                image: 'https://placehold.co/1920x1080?text=London',
+                ctaLink: 'https://en.wikipedia.org/wiki/London'
+            },
+            {
+                id: '4',
+                title: 'Crouch End',
+                image: 'https://placehold.co/1920x1080?text=Crouch+End',
+                ctaLink: 'https://en.wikipedia.org/wiki/Crouch_End'
+            },
+            {
+                id: '5',
+                title: 'Battersea',
+                image: 'https://placehold.co/1920x1080?text=Battersea',
+                ctaLink: 'https://en.wikipedia.org/wiki/Battersea'
+            },
+            {
+                id: '6',
+                title: 'Hackney',
+                image: 'https://placehold.co/1920x1080?text=Hackney',
+                ctaLink: 'https://en.wikipedia.org/wiki/Hackney'
+            },
+            {
+                id: '7',
+                title: 'Hammersmith',
+                image: 'https://placehold.co/1920x1080?text=Hammersmith',
+                ctaLink: 'https://en.wikipedia.org/wiki/Hammersmith'
+            },
+            {
+                id: '8',
+                title: 'Putney',
+                image: 'https://placehold.co/1920x1080?text=Putney',
+                ctaLink: 'https://en.wikipedia.org/wiki/Putney'
+            },
+            {
+                id: '9',
+                title: 'Archway',
+                image: 'https://placehold.co/1920x1080?text=Archway',
+                ctaLink: 'https://en.wikipedia.org/wiki/Archway'
+            },
+            {
+                id: '10',
+                title: 'Nunhead',
+                image: 'https://placehold.co/1920x1080?text=Nunhead',
+                ctaLink: 'https://en.wikipedia.org/wiki/Nunhead'
+            },
+            {
+                id: '11',
+                title: 'New York',
+                image: 'https://placehold.co/1920x1080?text=New+York',
+                ctaLink: 'https://en.wikipedia.org/wiki/New_York'
+            },
+            {
+                id: '12',
+                title: 'San Francisco',
+                image: 'https://placehold.co/1920x1080?text=San+Francisco',
+                ctaLink: 'https://en.wikipedia.org/wiki/San_Francisco'
+            },
+            {
+                id: '13',
+                title: 'Paris',
+                image: 'https://placehold.co/1920x1080?text=Paris',
+                ctaLink: 'https://en.wikipedia.org/wiki/Paris'
+            },
+            {
+                id: '14',
+                title: 'Tokyo',
+                image: 'https://placehold.co/1920x1080?text=Tokyo',
+                ctaLink: 'https://en.wikipedia.org/wiki/Tokyo'
+            },
+            {
+                id: '15',
+                title: 'Sydney',
+                image: 'https://placehold.co/1920x1080?text=Sydney',
+                ctaLink: 'https://en.wikipedia.org/wiki/Sydney'
+            },
+            {
+                id: '16',
+                title: 'Rome',
+                image: 'https://placehold.co/1920x1080?text=Rome',
+                ctaLink: 'https://en.wikipedia.org/wiki/Rome'
+            },
+            {
+                id: '17',
+                title: 'Berlin',
+                image: 'https://placehold.co/1920x1080?text=Berlin',
+                ctaLink: 'https://en.wikipedia.org/wiki/Berlin'
+            },
+            {
+                id: '18',
+                title: 'Amsterdam',
+                image: 'https://placehold.co/1920x1080?text=Amsterdam',
+                ctaLink: 'https://en.wikipedia.org/wiki/Amsterdam'
+            },
+            {
+                id: '19',
+                title: 'Toronto',
+                image: 'https://placehold.co/1920x1080?text=Toronto',
+                ctaLink: 'https://en.wikipedia.org/wiki/Toronto'
+            },
+            {
+                id: '20',
+                title: 'Los Angeles',
+                image: 'https://placehold.co/1920x1080?text=Los+Angeles',
+                ctaLink: 'https://en.wikipedia.org/wiki/Los_Angeles'
+            },
+            {
+                id: '21',
+                title: 'Rio de Janeiro',
+                image: 'https://placehold.co/1920x1080?text=Rio+de+Janeiro',
+                ctaLink: 'https://en.wikipedia.org/wiki/Rio_de_Janeiro'
+            },
+            {
+                id: '22',
+                title: 'Barcelona',
+                image: 'https://placehold.co/1920x1080?text=Barcelona',
+                ctaLink: 'https://en.wikipedia.org/wiki/Barcelona'
+            },
+            {
+                id: '23',
+                title: 'Dubai',
+                image: 'https://placehold.co/1920x1080?text=Dubai',
+                ctaLink: 'https://en.wikipedia.org/wiki/Dubai'
+            },
+            {
+                id: '24',
+                title: 'Singapore',
+                image: 'https://placehold.co/1920x1080?text=Singapore',
+                ctaLink: 'https://en.wikipedia.org/wiki/Singapore'
+            },
+            {
+                id: '25',
+                title: 'Cape Town',
+                image: 'https://placehold.co/1920x1080?text=Cape+Town',
+                ctaLink: 'https://en.wikipedia.org/wiki/Cape_Town'
+            },
+            {
+                id: '26',
+                title: 'Bali',
+                image: 'https://placehold.co/1920x1080?text=Bali',
+                ctaLink: 'https://en.wikipedia.org/wiki/Bali'
+            },
+            {
+                id: '27',
+                title: 'Venice',
+                image: 'https://placehold.co/1920x1080?text=Venice',
+                ctaLink: 'https://en.wikipedia.org/wiki/Venice'
+            },
+            {
+                id: '28',
+                title: 'Sydney',
+                image: 'https://placehold.co/1920x1080?text=Sydney',
+                ctaLink: 'https://en.wikipedia.org/wiki/Sydney'
+            },
+            {
+                id: '29',
+                title: 'Rome',
+                image: 'https://placehold.co/1920x1080?text=Rome',
+                ctaLink: 'https://en.wikipedia.org/wiki/Rome'
+            },
+            {
+                id: '30',
+                title: 'Tokyo',
+                image: 'https://placehold.co/1920x1080?text=Tokyo',
+                ctaLink: 'https://en.wikipedia.org/wiki/Tokyo'
+            }
+        ];
+
+        const sliderContainer = document.querySelector('.slider-container');
+        const mainSlide = document.querySelector('.main-slide');
+        const thumbnailCarousel = document.querySelector('.thumbnail-carousel');
+        const prevButton = document.getElementById('prevBtn');
+        const nextButton = document.getElementById('nextBtn');
+        const prevThumbButton = document.getElementById('prevThumbBtn');
+        const nextThumbButton = document.getElementById('nextThumbBtn');
+
+        let currentSlideIndex = 0;
+        let currentThumbnailIndex = 0;
+
+        // Number of thumbnails to display at a time
+        const thumbnailsPerPage = 8;
+
+        function createSlider(locations) {
+            locations.forEach((location, index) => {
+                const mainSlideItem = document.createElement('div');
+                mainSlideItem.classList.add('main-slide-item');
+                mainSlideItem.innerHTML = `
+                    <img src="${location.image}" alt="${location.title}">
+                    <h3>${location.title}</h3>
+                    <a href="${location.ctaLink}" target="_blank">Learn More</a>
+                `;
+                mainSlide.appendChild(mainSlideItem);
+
+                if (index !== 0) {
+                    mainSlideItem.style.display = 'none';
+                }
+            });
+        }
+
+        function createThumbnailCarousel(locations) {
+            for (let i = 0; i < locations.length; i++) {
+                const thumbnailItem = document.createElement('div');
+                thumbnailItem.classList.add('thumbnail-item');
+                thumbnailItem.innerHTML = `<img src="${locations[i].image}" alt="${locations[i].title}">`;
+                thumbnailItem.addEventListener('click', () => showSlide(i));
+                thumbnailCarousel.appendChild(thumbnailItem);
+
+                if (i >= thumbnailsPerPage) {
+                    thumbnailItem.style.display = 'none';
+                }
+            }
+        }
+
+        function showSlide(index) {
+            const mainSlideItems = document.querySelectorAll('.main-slide-item');
+            mainSlideItems.forEach((slide, i) => {
+                if (i === index) {
+                    slide.style.display = 'block';
+                } else {
+                    slide.style.display = 'none';
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlideIndex = (currentSlideIndex + 1) % locations.length;
+            showSlide(currentSlideIndex);
+        }
+
+        function previousSlide() {
+            currentSlideIndex = (currentSlideIndex - 1 + locations.length) % locations.length;
+            showSlide(currentSlideIndex);
+        }
+
+        function nextThumbnail() {
+            if (currentThumbnailIndex + thumbnailsPerPage < locations.length) {
+                const thumbnails = document.querySelectorAll('.thumbnail-item');
+                for (let i = 0; i < thumbnailsPerPage; i++) {
+                    thumbnails[currentThumbnailIndex + i].style.display = 'none';
+                    thumbnails[currentThumbnailIndex + i + thumbnailsPerPage].style.display = 'block';
+                }
+                currentThumbnailIndex += thumbnailsPerPage;
+            }
+        }
+
+        function previousThumbnail() {
+            if (currentThumbnailIndex > 0) {
+                const thumbnails = document.querySelectorAll('.thumbnail-item');
+                for (let i = 0; i < thumbnailsPerPage; i++) {
+                    thumbnails[currentThumbnailIndex + i].style.display = 'none';
+                    thumbnails[currentThumbnailIndex + i - thumbnailsPerPage].style.display = 'block';
+                }
+                currentThumbnailIndex -= thumbnailsPerPage;
+            }
+        }
+
+        // Add event listeners to navigation buttons
+        prevButton.addEventListener('click', previousSlide);
+        nextButton.addEventListener('click', nextSlide);
+        prevThumbButton.addEventListener('click', previousThumbnail);
+        nextThumbButton.addEventListener('click', nextThumbnail);
+
+        // Set an interval to change the slide every 3 seconds
+        setInterval(nextSlide, 3000);
+
+        // Call createSlider and createThumbnailCarousel to initialize the slider and thumbnails
+        createSlider(locations);
+        createThumbnailCarousel(locations);
+    </script>
+</body>
+</html>

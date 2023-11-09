@@ -1,0 +1,73 @@
+<script>
+
+    window.addEventListener("DOMContentLoaded", function () {
+
+        // Main slider
+        const mainSliderImages = document.querySelectorAll('.main_slide_item');
+        let currentImageIndex = 0;
+
+        function showNextImage() {
+            mainSliderImages[currentImageIndex].classList.remove('active');
+            currentImageIndex = (currentImageIndex + 1) % mainSliderImages.length;
+            mainSliderImages[currentImageIndex].classList.add('active');
+            updateThumbnailSlider(currentImageIndex);
+        }
+
+        mainSliderImages[currentImageIndex].classList.add('active');
+
+        // Start auto play when the page loads
+        startAutoPlay();
+
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(showNextImage, 3000);
+        }
+
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+
+        // Thumbnail slider
+        const thumbImages = document.querySelectorAll('.test-slide');
+        let currentThumbImageIndex = 0;
+
+        function updateThumbnailSlider(index) {
+            thumbImages[currentThumbImageIndex].classList.remove('active');
+            currentThumbImageIndex = index;
+            thumbImages[currentThumbImageIndex].classList.add('active');
+
+            const thumbSlider = document.querySelector('.test-slides-container');
+            const thumbnailWidth = thumbImages[0].clientWidth;
+            const thumbnailCount = thumbImages.length;
+            const visibleThumbnails = Math.floor(thumbSlider.clientWidth / thumbnailWidth);
+
+            if (currentThumbImageIndex >= visibleThumbnails && currentThumbImageIndex < thumbnailCount - visibleThumbnails) {
+                thumbSlider.scrollLeft = (currentThumbImageIndex - visibleThumbnails) * thumbnailWidth;
+            } else if (currentThumbImageIndex === thumbnailCount - 1) {
+                thumbSlider.scrollLeft = (thumbnailCount - visibleThumbnails) * thumbnailWidth;
+            } else {
+                thumbSlider.scrollLeft = 0;
+            }
+        }
+
+        // Manual buttons for main slider
+        const prevButton = document.getElementById("test-slide-arrow-prev");
+        const nextButton = document.getElementById("test-slide-arrow-next");
+
+        nextButton.addEventListener("click", () => {
+            showNextImage();
+        });
+
+        prevButton.addEventListener("click", () => {
+            currentImageIndex = (currentImageIndex - 1 + mainSliderImages.length) % mainSliderImages.length;
+            mainSliderImages[currentImageIndex].classList.add('active');
+            updateThumbnailSlider(currentImageIndex);
+        });
+
+        // Stop auto play when the user interacts with the carousel
+        const slidesContainer = document.getElementById("test-slides-container");
+        slidesContainer.addEventListener("mouseover", stopAutoPlay);
+        slidesContainer.addEventListener("mouseout", startAutoPlay);
+
+    });
+
+</script>

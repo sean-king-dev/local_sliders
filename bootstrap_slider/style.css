@@ -1,0 +1,43 @@
+div#carousel-slides {
+    border: 3px dotted blue;
+    width: 80%;
+    height: 500px;
+    margin: 0 auto;
+}
+
+.carousel-item {
+    border: 2px dotted magenta;
+    height: 300px;
+    max-width: calc(100% / 4);
+    margin: 0;
+    padding: 0;
+}
+
+.carousel-item h5 {
+    color: #fff;
+    background: #59c6e7;
+}
+
+.carousel-item.active {
+    border: 2px solid red;
+    height: 300px;
+    margin: 0;
+    padding: 0;
+}
+
+.carousel img {
+    border: 2px lime solid;
+    object-fit: contain;
+    width: 100%;
+    overflow-y: hidden;
+}
+
+.carousel-indicators {
+    list-style:disc;
+    color: red;
+}
+
+.carousel-control-next, .carousel-control-prev {
+    color: red;
+    background: yellow;
+}

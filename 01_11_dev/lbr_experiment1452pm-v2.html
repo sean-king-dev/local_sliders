@@ -1,0 +1,64 @@
+<script>
+
+    // var $Li = 1;
+    // const slideSpeed = 3000;
+
+    window.addEventListener("DOMContentLoaded", function () {
+
+        // main slider
+        $(".main_fade_slide").each(function () {
+
+            
+        })
+
+        // thumbnail slider
+        let slideInner = document.querySelector(".test-slides-container");
+        // let slideInner = document.querySelector(".slider-inner");
+
+        $(".hidden_thumb_slide").each(function (index) {
+            thumb_image = $(this).find(".thumb img").attr("src");
+            thumb_title = $(this).find(".title p.h4 img").attr("title");
+            thumb_link = $(this).find(".thumb_link").attr('data-link');
+
+            let showMainSlide = `
+                <div class="test-slide" data-slideindex=${index}>
+                    <div class="ThumbImgTop_Pointer thumbnail_show_pin"></div>
+                    <div class="image-bg-div" style="background:url(${thumb_image});">
+                        <p class="h4 main_title">${thumb_title}</p>
+                        <a href="${thumb_link}" class="ctalink go-button thumbnail_show_button" href="${thumb_link}"><span>Go</span><i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            `;
+
+            slideInner.innerHTML += showMainSlide;
+
+            
+
+
+        });
+
+        function startAutoPlay(images, initialIndex, delay) {
+        let currentImageIndex = initialIndex;
+
+        function showNextImage() {
+            images[currentImageIndex].classList.remove('active');
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            images[currentImageIndex].classList.add('active');
+        }
+
+        setInterval(showNextImage, delay);
+        }
+
+        // Main slider
+        const mainSliderImages = document.querySelectorAll('.main_fade_slide');
+        startAutoPlay(mainSliderImages, 0, 3000);
+
+        // Thumbnail slider
+        const thumbSliderImages = document.querySelectorAll('.test-slide');
+        startAutoPlay(thumbSliderImages, 8, 3000);
+
+        
+
+    });
+
+</script>

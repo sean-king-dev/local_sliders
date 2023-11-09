@@ -1,0 +1,115 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const mainSlides = document.querySelectorAll('.main_slide_item');
+        const thumbnailSlides = document.querySelectorAll('.test-slide');
+        const slidesContainer = document.getElementById("test-slides-container");
+        const prevButton = document.getElementById("test-slide-arrow-prev");
+        const nextButton = document.getElementById("test-slide-arrow-next");
+
+        let currentMainSlideIndex = 0;
+        let autoPlayInterval;
+
+        // Initialize the main slider
+        function initializeMainSlider() {
+            mainSlides[currentMainSlideIndex].classList.add('active');
+            startAutoPlay();
+        }
+
+        // Switch to the next main slide
+        function showNextMainSlide() {
+            mainSlides[currentMainSlideIndex].classList.remove('active');
+            currentMainSlideIndex = (currentMainSlideIndex + 1) % mainSlides.length;
+            mainSlides[currentMainSlideIndex].classList.add('active');
+            updateThumbnailSlider(currentMainSlideIndex);
+        }
+
+        // Start auto play
+        function startAutoPlay() {
+            stopAutoPlay();
+            autoPlayInterval = setInterval(showNextMainSlide, 3000);
+        }
+
+        // Stop auto play
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+
+        // Initialize the thumbnail slider
+        function initializeThumbnailSlider() {
+            thumbnailSlides[currentMainSlideIndex].classList.add('active');
+            updateThumbnailSlider(currentMainSlideIndex);
+        }
+
+        // Update the thumbnail slider
+        function updateThumbnailSlider(index) {
+            thumbnailSlides[currentMainSlideIndex].classList.remove('active');
+            currentMainSlideIndex = index;
+            thumbnailSlides[currentMainSlideIndex].classList.add('active');
+
+            const thumbnailWidth = thumbnailSlides[0].clientWidth;
+            const visibleThumbnails = Math.floor(slidesContainer.clientWidth / thumbnailWidth);
+
+            if (currentMainSlideIndex >= visibleThumbnails && currentMainSlideIndex < thumbnailSlides.length - visibleThumbnails) {
+                slidesContainer.scrollLeft = (currentMainSlideIndex - visibleThumbnails) * thumbnailWidth;
+            } else if (currentMainSlideIndex === thumbnailSlides.length - 1) {
+                slidesContainer.scrollLeft = (thumbnailSlides.length - visibleThumbnails) * thumbnailWidth;
+            } else {
+                slidesContainer.scrollLeft = 0;
+            }
+        }
+
+        // Manual buttons for main slider
+        nextButton.addEventListener("click", () => {
+            showNextMainSlide();
+        });
+
+        prevButton.addEventListener("click", () => {
+            currentMainSlideIndex = (currentMainSlideIndex - 1 + mainSlides.length) % mainSlides.length;
+            mainSlides[currentMainSlideIndex].classList.add('active');
+            updateThumbnailSlider(currentMainSlideIndex);
+        });
+
+        // Handle user interaction
+        slidesContainer.addEventListener("mouseover", stopAutoPlay);
+        slidesContainer.addEventListener("mouseout", startAutoPlay);
+
+        // Initialize both sliders
+        initializeMainSlider();
+        initializeThumbnailSlider();
+
+        // Your provided code for main slider
+        $(".main_fade_slide").each(function () {
+            const images = document.querySelectorAll('.main_slide_item');
+            let currentImageIndex = 0;
+
+            function showNextImage() {
+                images[currentImageIndex].classList.remove('active');
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                images[currentImageIndex].classList.add('active');
+            }
+
+            images[currentImageIndex].classList.add('active');
+
+            setInterval(showNextImage, 3000);
+        })
+
+        // Your provided code for thumbnail slider
+        $(".hidden_thumb_slide").each(function (index) {
+            thumb_image = $(this).find(".thumb img").attr("src");
+            thumb_title = $(this).find(".title p.h4 img").attr("title");
+            thumb_link = $(this).find(".thumb_link").attr('data-link');
+
+            let showMainSlide = `
+                <div class="test-slide" data-slideindex=${index}>
+                    <div class="ThumbImgTop_Pointer thumbnail_show_pin"></div>
+                    <div class="image-bg-div" style="background:url(${thumb_image});">
+                        <p class="h4 main_title">${thumb_title}</p>
+                        <a href="${thumb_link}" class="ctalink go-button thumbnail_show_button" href="${thumb_link}"><span>Go</span><i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            `;
+
+            slidesContainer.innerHTML += showMainSlide;
+        });
+    });
+</script>

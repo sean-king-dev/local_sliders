@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* CSS for the slideshow */
+        .main_slide_items {
+            position: relative;
+            overflow: hidden;
+            width: 600px;
+            height: 400px;
+        }
+        
+        .main_slide_item {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        
+        .main_slide_item.active {
+            opacity: 1;
+        }
+
+        /* CSS for controls */
+        .carousel-controls {
+            text-align: center;
+        }
+
+        .carousel-controls button {
+            margin: 10px;
+            padding: 5px 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="main_slide_items">
+        <!-- Slides will be dynamically inserted here -->
+    </div>
+    <div class="carousel-controls">
+        <button onclick="previousSlide()">Previous</button>
+        <button onclick="nextSlide()">Next</button>
+    </div>
+
+    <script>
+       const locations = [
+    {
+        id: '1',
+        title: 'Oxford',
+        //image: '../assets/img/img_one.jpg',
+        // image: 'https://picsum.photos/300',
+         image: 'https://placehold.co/600x400?text=one',
+        ctaLink: 'https://en.wikipedia.org/wiki/Oxford'
+    },
+    {
+        id: '2',
+        title: 'Hove',
+        //image: '../assets/img/img_two.jpg',
+        // image: 'https://picsum.photos/300',
+         image: 'https://placehold.co/600x400?text=two',
+        ctaLink: 'https://en.wikipedia.org/wiki/Oxford'
+    },
+    {
+        id: '3',
+        title: 'London',
+        //image: '../assets/img/img_three.jpg',
+        // image: 'https://picsum.photos/300',
+         image: 'https://placehold.co/600x400?text=three',
+        ctaLink: 'https://en.wikipedia.org/wiki/Oxford'
+    },
+    {
+        id: '4',
+        title: 'Crouch End',
+        //image: '../assets/img/img_four.jpg',
+        // image: 'https://picsum.photos/300',
+         image: 'https://placehold.co/600x400?text=four',
+        ctaLink: 'https://en.wikipedia.org/wiki/Oxford'
+    },
+    {
+        id: '5',
+        title: 'Battersea',
+        //image: '../assets/img/img_five.jpg',
+        // image: 'https://picsum.photos/300',
+         image: 'https://placehold.co/600x400?text=five',
+        ctaLink: 'https://en.wikipedia.org/wiki/Oxford'
+    },
+    {
+        id: '6',
+        title: 'Hackney',
+        //image: '../assets/img/img_six.jpg',
+        // image: 'https://picsum.photos/300',
+         image: 'https://placehold.co/600x400?text=six',
+        ctaLink: 'https://en.wikipedia.org/wiki/Oxford'
+    },
+    {
+        id: '7',
+        title: 'Hammersmith',
+        //image: '../assets/img/img_seven.jpg',
+        // image: 'https://picsum.photos/300',
+         image: 'https://placehold.co/600x400?text=seven',
+        ctaLink: 'https://en.wikipedia.org/wiki/Oxford'
+    },
+    {
+        id: '8',
+        title: 'Putney',
+        //image: '../assets/img/img_eight.jpg',
+        // image: 'https://picsum.photos/300',
+         image: 'https://placehold.co/600x400?text=eight',
+        ctaLink: 'https://en.wikipedia.org/wiki/Oxford'
+    },
+    {
+        id: '9',
+        title: 'Archway',
+        //image: '../assets/img/img_nine.jpg',
+        // image: 'https://picsum.photos/300',
+         image: 'https://placehold.co/600x400?text=nine',
+        ctaLink: 'https://en.wikipedia.org/wiki/Oxford'
+    },
+    {
+        id: '10',
+        title: 'Nunhead',
+        //image: '../assets/img/img_ten.jpg',
+        // image: 'https://picsum.photos/300',
+         image: 'https://placehold.co/600x400?text=ten',
+        ctaLink: 'https://en.wikipedia.org/wiki/Oxford'
+    }
+
+];
+
+        const slideContainer = document.querySelector('.main_slide_items');
+        const carouselControls = document.querySelector('.carousel-controls');
+        let currentSlideIndex = 0;
+
+        // Create and append the slides
+        locations.forEach((location, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'main_slide_item';
+            slide.innerHTML = `
+                <h3>${location.title}</h3>
+                <img src="${location.image}" alt="${location.title}">
+                <a href="${location.ctaLink}" target="_blank">Learn More</a>
+            `;
+            // slideContainer.appendChild(slide);
+            slideContainer.innerHTML += slide;
+
+            if (index === 0) {
+                slide.classList.add('active');
+            }
+        });
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.main_slide_item');
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            })
+        }
+
+        function nextSlide() {
+            currentSlideIndex = (currentSlideIndex + 1) % locations.length;
+            showSlide(currentSlideIndex);
+        }
+
+        function previousSlide() {
+            currentSlideIndex = (currentSlideIndex - 1 + locations.length) % locations.length;
+            showSlide(currentSlideIndex);
+        }
+
+        // Initial display
+        showSlide(currentSlideIndex);
+    </script>
+</body>
+</html>

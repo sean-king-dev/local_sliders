@@ -1,0 +1,128 @@
+<script>
+   
+    let $Li = 1;
+        
+         window.addEventListener("load", function(){
+         
+            
+         // thumbnail slider   
+         let slideInner = document.querySelector(".slide_inner");
+        
+         $(".hidden_thumb_slide").each(function (index) {
+             thumb_image = $(this).find(".thumb img").attr("src");
+             thumb_title = $(this).find(".title p.h4 img").attr("title");
+             thumb_link = $(this).find(".thumb_link").attr('data-link');
+             
+             let showMainSlide = `
+                 <div class="dynamic_slide_item">
+                     <div class="image-bg-div" style="background:url(${thumb_image});">
+                         <div class="ThumbImgTop"></div>
+                         <p class="h4 main_title" onclick="currentSlide(${index})">${thumb_title}</p>
+                         <a class="ctalink go-button" href="${thumb_link}">Go</a>
+                     </div>
+                 </div>
+             `;
+         
+         slideInner.innerHTML += showMainSlide;
+ 
+         });
+         
+         let slideInner2 = document.querySelector(".test-slides-container");
+        
+         $(".hidden_thumb_slide").each(function (index) {
+             thumb_image = $(this).find(".thumb img").attr("src");
+             thumb_title = $(this).find(".title p.h4 img").attr("title");
+             thumb_link = $(this).find(".thumb_link").attr('data-link');
+             
+             let showMainSlide2 = `
+                 <!-- <div class="dynamic_slide_item"> -->
+                 <div class="test-slide">
+                 <div class="ThumbImgTop_Pointer"></div>
+                     <div class="image-bg-div" style="background:url(${thumb_image});">
+                         
+                         <p class="h4 main_title" onclick="currentSlide(${index})">${thumb_title}</p>
+                         <a class="ctalink go-button" href="${thumb_link}">Go</a>
+                     </div>
+                 </div>
+             `;
+         
+         slideInner2.innerHTML += showMainSlide2;
+ 
+         });
+ 
+         const slidesContainer = document.getElementById("test-slides-container");
+         const slide = document.querySelector(".test-slide");
+         const prevButton = document.getElementById("test-slide-arrow-prev");
+         const nextButton = document.getElementById("test-slide-arrow-next");
+         
+         nextButton.addEventListener("click", () => {
+           const slideWidth = slide.clientWidth;
+           slidesContainer.scrollLeft += slideWidth;
+         });
+         
+         prevButton.addEventListener("click", () => {
+           const slideWidth = slide.clientWidth;
+           slidesContainer.scrollLeft -= slideWidth;
+         });
+         
+         });
+        
+        
+ 
+        
+        
+    </script>
+     <div class="main_slider_wrapper">
+ 
+         <section class="main_slide_wrapper">
+                   [[+row_content]]
+         </section>
+         
+         <section class="thumbnail_carousel_wrapper">
+             
+         <div class="location_carousel_wrapper">
+             <div class="location_thumbnail_container">
+                 
+                 <div class="slide_inner">
+                     
+                 </div>
+              </div>
+         </div>
+ 
+       </section>
+       
+       <section class="test-slider-wrapper">
+   <button class="test-slide-arrow" id="test-slide-arrow-prev">
+     &#8249;
+   </button>
+   <button class="test-slide-arrow" id="test-slide-arrow-next">
+     &#8250;
+   </button>
+   <div class="test-slides-container" id="test-slides-container">
+ <!--     <li class="test-slide">
+     
+     
+ </li> -->
+ <!--     <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li>
+ <li class="test-slide"></li> -->
+   </div>
+ </section>
+     </div>
+     
+     

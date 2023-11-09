@@ -1,0 +1,69 @@
+/* CSS for the main slideshow */
+.main_slide_items {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 75vh;
+}
+
+.main_slide_item {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s;
+    width: 100%;
+    height: 100%;
+}
+
+.main_slide_item.active {
+    opacity: 1;
+}
+
+.main_slide_item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* CSS for the thumbnail slider container */
+.thumbnail_container {
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+#thumbnail-slider {
+    display: flex !important;
+}
+
+/* CSS for individual thumbnail slides */
+.thumbnail_slide {
+    width: calc(100% / 8);
+    cursor: pointer;
+    transition: border 0.3s;
+    border: 2px solid transparent;
+}
+
+.thumbnail_slide.active {
+    border: 2px solid #333;
+}
+
+.thumbnail_slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* CSS for thumbnail slider controls */
+.thumbnail-controls {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.thumbnail-controls button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}

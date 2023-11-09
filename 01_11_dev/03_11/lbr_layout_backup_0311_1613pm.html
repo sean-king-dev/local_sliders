@@ -1,0 +1,148 @@
+<!-- <script>
+
+    window.addEventListener("DOMContentLoaded", function () {
+
+        // main slider
+        $(".main_fade_slide").each(function () {
+
+            const images = document.querySelectorAll('.main_slide_item');
+            let currentImageIndex = 0;
+
+            function showNextImage() {
+                images[currentImageIndex].classList.remove('active');
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                images[currentImageIndex].classList.add('active');
+            }
+
+            images[currentImageIndex].classList.add('active');
+
+        })
+
+        // thumbnail slider
+        let slideInner = document.querySelector(".test-slides-container");
+        // let slideInner = document.querySelector(".slider-inner");
+
+        $(".hidden_thumb_slide").each(function (index) {
+            thumb_image = $(this).find(".thumb img").attr("src");
+            thumb_title = $(this).find(".title p.h4 img").attr("title");
+            thumb_link = $(this).find(".thumb_link").attr('data-link');
+
+            let showMainSlide = `
+                <div class="test-slide" data-slideindex=${index}>
+                    <div class="ThumbImgTop_Pointer thumbnail_show_pin"></div>
+                    <div class="image-bg-div" style="background:url(${thumb_image});">
+                        <p class="h4 main_title">${thumb_title}</p>
+                        <a href="${thumb_link}" class="ctalink go-button thumbnail_show_button" href="${thumb_link}"><span>Go</span><i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            `;
+
+            slideInner.innerHTML += showMainSlide;
+
+        });
+
+        const thumbImages = document.querySelectorAll(".test-slide");
+        let currentThumbImage = 0;
+
+        function showNextThumbImage() {
+                thumbImages[currentThumbImage].classList.remove('active');
+                currentThumbImage = (currentThumbImage + 1) % thumbImages.length;
+                thumbImages[currentThumbImage].classList.add('active');
+            }
+
+            thumbImages[currentThumbImage].classList.add('active');
+
+
+  
+    });
+
+    </script> -->
+
+    <script>
+        window.addEventListener("DOMContentLoaded", function () {
+
+            // get mainslide wrapper
+            let mainSlideContainer = document.querySelector(".main_fade_slide");
+
+            // create main slide div
+            let mainImage = document.createElement("div");
+            mainImage.setAttribute("class", "main_slide_item");
+
+            // make first itemn in array visible
+            $(".main_slide_item").first().addClass("active");
+
+            // attach slide itenm to wrapper
+            mainSlideContainer.append(mainImage);
+
+            $(".main_fade_slide").each(function () {
+
+                // dynamically pulls in image from class name via modx
+                
+            });
+
+
+            // get thumbnail carousel wrapper
+            let thumbSlideContainer = document.querySelector(".test-slides-container");
+
+            // create thumb slide inner carousel container div
+            let thumbImageInner = document.createElement("div");
+            thumbImageInner.setAttribute("class", "thumb-slide-inner");
+
+            // attach thumb slide to thumb parent container
+            thumbSlideContainer.appendChild(thumbImageInner);
+
+            // loop through array
+            $(".hidden_thumb_slide").each(function(index){
+
+                // get source miodx data to put into slide
+                thumb_image = $(this).find(".thumb img").attr("src");
+                thumb_title = $(this).find(".title p.h4 img").attr("title");
+                thumb_link = $(this).find(".thumb_link").attr('data-link');
+
+                // create thumb item html component
+                let showMainSlide = `
+                    <div class="test-slide" data-slideindex=${index}>
+                        <div class="ThumbImgTop_Pointer thumbnail_show_pin"></div>
+                        <div class="image-bg-div" style="background:url(${thumb_image});">
+                            <p class="h4 main_title">${thumb_title}</p>
+                            <a href="${thumb_link}" class="ctalink go-button thumbnail_show_button" href="${thumb_link}"><span>Go</span><i class="fa fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                `;
+
+                // attach dynamic html looped array components to inner slider carousel container
+                thumbImageInner.innerHTML += showMainSlide;
+
+            });
+            
+        });
+
+
+
+
+
+// // main slider
+// const images = document.querySelectorAll('.main_slide_item');
+// let currentImageIndex = 0;
+
+// // thumbnail slider
+// const slideInner = document.querySelector(".test-slides-container");
+// const thumbImages = document.querySelectorAll(".test-slide");
+// let currentThumbImage = 0;
+
+// function showNextImage() {
+//     images[currentImageIndex].classList.remove('active');
+//     currentImageIndex = (currentImageIndex + 1) % images.length;
+//     images[currentImageIndex].classList.add('active');
+
+//     thumbImages[currentThumbImage].classList.remove('active');
+//     currentThumbImage = (currentThumbImage + 1) % thumbImages.length;
+//     thumbImages[currentThumbImage].classList.add('active');
+// }
+
+// images[currentImageIndex].classList.add('active');
+// thumbImages[currentThumbImage].classList.add('active');
+
+// setInterval(showNextImage, 3000);
+// });
+    </script>

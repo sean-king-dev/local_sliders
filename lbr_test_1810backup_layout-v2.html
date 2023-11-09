@@ -1,0 +1,111 @@
+<script>
+
+    var LslideIndex = 1;
+    var myTimerNew;
+    var slideshowContainer;
+    var $Li = 1;
+    var $nextLoc = 1;
+    var $prevLoc = -1;
+    var thumbimage;
+    var Imagearr = [];
+    var index_id;
+    
+    window.addEventListener("load", function (){
+        
+        $(".location_mySlides").each(function (index) {
+            
+            // get data from modx 
+            thumbimage = $(this).find(".thumb img").attr("src");
+            thumbimageTitle = $(this).find(".thumb img").attr("title");
+            Destlink = $(this).find(".location_banner").attr('data-link');
+            
+            $(".location_dots").append("<span title='" + thumbimageTitle + "' class='Ldot' id='location_circle' onclick='currentSlide(" + $Li + ")'></span>");
+    
+            var newDiv = document.createElement("div");
+            newDiv.textContent = thumbimageTitle;
+            newDiv.setAttribute('class', 'thumbimgtitle');
+            newDiv.setAttribute('title', thumbimageTitle);
+            newDiv.setAttribute('onclick', 'currentSlide(' + $Li + ')');
+            newDiv.setAttribute('index', $Li);
+            $(".location_thumbnail_sk").append(newDiv);
+    
+    
+            var newDivLink = document.createElement("div");
+            newDivLink.innerHTML = "<a href='" + Destlink + "'><span>GO</span><i  class='fa fa-arrow-right' aria-hidden='true'></i></a>";
+            newDivLink.setAttribute('class', 'thumbimgtitleLink font_bold');
+            newDivLink.setAttribute('index', $Li);
+            $(".location_thumbnail_sk").append(newDivLink);
+
+            $(".location_thumbnail_sk").append($('<img alt="Location" index="' + $Li + '" title="' + thumbimageTitle + '" onclick="currentSlide(' + $Li + ')" class="ThumbImgList" src="' + thumbimage + '">'));
+    
+            $Li++;
+            
+        }); // end myslides function
+        
+            var newDivParent = document.createElement("div");
+            newDivParent.setAttribute('class', 'thumbimgParent');
+            $('.location_thumbnail_sk > img').wrap(newDivParent);
+            
+            $('.thumbimgtitle').each(function(index) {
+           let thumbtitle = $(this);
+           let thumblink = $(this).next('.thumbimgtitleLink');
+           let thumbparent = thumblink.next('.thumbimgParent');
+          
+           thumbtitle.addClass(`carousel-item-${index}`);
+           thumblink.addClass(`carousel-item-${index}`);
+           thumbparent.addClass(`carousel-item-${index}`);
+
+           $(`.carousel-item-${index}`).wrapAll(`<div class="thumbWrapper carousel-item-${index}" />`);
+             
+        });
+        
+    }); // end window event
+    
+    
+    // slider buttons
+    // custom slider controls for thumbnail carouael
+const TslidesContainer = document.querySelector(".location_thumbnail_sk");
+const Tslide = document.querySelector(`.carousel-item-${index}`);
+const prevButton = document.querySelector(".button_wrapper_prev");
+const nextButton = document.querySelector(".button_wrapper_next");
+
+nextButton.addEventListener("click", () => {
+  const slideWidth = Tslide.clientWidth;
+  TslidesContainer.scrollLeft += slideWidth;
+});
+
+prevButton.addEventListener("click", () => {
+  const slideWidth = Tslide.clientWidth;
+  TslidesContainer.scrollLeft -= slideWidth;
+});
+</script>
+    
+    <div class="banner-row location-banner title-[[+title_color]] highlight-[[+titleBackground]] [[+class]]">
+
+        <div class="location_dots" ></div>
+        [[+overlay:eq=`yes`:then=`<div class="overlay"></div>`]]
+        <div 
+            class="constrainer12 image_slider slider-container" 
+            style="overflow: hidden;"
+            data-autostart="[[+autostart]]"
+            >
+            [[+row_content]]
+        </div>
+        
+        
+        <section class="thumbnail_carousel_wrapper_sk">
+            
+        <div class="location_carousel_wrapper_sk">
+            <div class="location_thumbnail_sk">
+               <!--  [[+location_thumbnail]] -->
+             </div>
+        </div>
+        
+       <div class="button_wrapper">
+            <div class="button_wrapper_prev"></div>
+        <div class="button_wrapper_next"></div>
+       </div>
+      </section>
+    </div>
+    
+    

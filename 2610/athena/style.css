@@ -1,0 +1,38 @@
+/* .slideshow {
+    max-width: 600px;
+    margin: auto;
+    position: relative;
+  } */
+
+.slideshow {
+  width: 80%;
+  margin: auto;
+  /* position: relative; */
+  border: 2px solid lime;
+  height: 100%;
+  overflow:scroll;
+  /* overflow: hidden; */
+}
+
+.slide_container {
+  display: flex;
+  border: 5px dashed violet;
+  width: 100%;
+}
+
+.slide {
+  border: 2px solid red;
+  min-width: 100%;
+  background-size: cover;
+  background-position: center center;
+}
+
+.image_div {
+  width: 100%;
+  background-size: cover;
+  object-fit: cover;
+  border: 2px dotted black;
+}
+img {
+  background-size: cover;
+}

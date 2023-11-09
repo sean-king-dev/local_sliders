@@ -1,0 +1,55 @@
+        /* CSS for the slideshow */
+        .main_slide_items {
+            position: relative;
+            overflow: hidden;
+            width: 100%; /* Set to fullscreen width */
+            height: 100vh; /* Set to fullscreen height */
+        }
+        
+        .main_slide_item {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .main_slide_item.active {
+            opacity: 1;
+        }
+        
+        .main_slide_item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .location_title {
+            color: #fff;
+            background: #59c6e7;
+            font-size: 1rem;
+            text-transform: uppercase;
+            padding: 1rem;
+            width: 40%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* CSS for controls */
+        .carousel-controls {
+            text-align: center;
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+        }
+
+        .carousel-controls button {
+            margin: 10px;
+            padding: 5px 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }

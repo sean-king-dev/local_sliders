@@ -1,0 +1,72 @@
+<script>
+
+
+    window.addEventListener("load", function() {
+        
+        // loop through modx variables 
+        $(".location_mySlides").each(function (index){
+            
+            thumb_image = $(this).find(".thumb img").attr("src");
+            thumb_title = $(this).find(".thumb img").attr("title");
+            thumb_link = $(this).find(".location_banner").attr('data-link');
+            
+            const thumb_container = document.querySelector(".custom_location_thumbnail");
+            
+            const slideInner = document.querySelector(".slider_inner");
+    
+            const main_slide = document.createElement("div");
+            main_slide.setAttribute('class', 'slide');
+            
+            slideInner.appendChild(main_slide);
+            
+            const mainSlide = document.querySelector(".slide");
+            
+            const showMainSlide = (() => {
+            return `
+                    <div class="main_slide_wrapper">
+                    <div class="main_slide_item">
+                        <div class="slide-body-image" style="background: url(${thumb_img});">
+                            <h5 class="card-title">${thumb_title}</h5>
+                            <a href=${thumb_link}>Go</a>
+                        </div>
+                    </div>
+                    </div>`
+        });
+        
+        mainSlide.innerHTML = showMainSlide;
+        
+        document.getElementsByClassName('main_slide_wrapper')[0].classList.add('active');
+            
+        });
+    
+    
+        
+    });
+    
+    </script>
+    
+    <div class="banner-row location-banner title-[[+title_color]] highlight-[[+titleBackground]] [[+class]]">
+        <!--<div class="background active" style="background-image:url('[[+background]]');"></div>-->
+        <div class="location_dots" ></div>
+        [[+overlay:eq=`yes`:then=`<div class="overlay"></div>`]]
+        <div 
+            class="constrainer12 image_slider slider-container" 
+            style="overflow: hidden;"
+            data-autostart="[[+autostart]]"
+            >
+            [[+row_content]]
+        </div>
+        
+        
+        <section class="custom_thumbnail_carousel_wrapper">
+            
+            <div class="custom_location_carousel_wrapper">
+                <div class="custom_location_thumbnail">
+    =
+                 </div>
+            </div>
+    
+        </section>
+    </div>
+        
+        

@@ -1,0 +1,44 @@
+<style>
+    @media screen and (min-width:1024px) {
+        .mobile_slide_item {
+            display: none;
+        }
+}
+
+    @media screen and (max-width:1023px) {
+        .main_slide_item {
+            display: none;
+        }
+}
+</style>
+
+<div class="main_fade_slide" style="border: 2px solid blue;">
+    
+    <div class="main_slide_item" data-link="[[+dest_link]]" style="background-image:url([[+banner_image]]); border: 2px solid purple;">
+        <img class="main_img_div" src="[[+banner__title_image]]" alt="Location banner">
+        <a href="[[+dest_link]]"></a>
+    </div>
+    
+    <div class="mobile_slide_item" data-link="[[+dest_link]]" style="background-image:url([[+banner_image_mobile]]); border: 2px solid magenta;">
+        <img class="mobile_img_div" src="[[+banner__title_image]]" alt="Location banner">
+        <a href="[[+dest_link]]"></a>
+    </div>
+    
+    <div class="hidden_thumb_slide" id="secondary_thumbnail_slider" style="display:none">
+  
+    <div class="thumb_slide_item" data-link="[[+dest_link]]" style="background-image:url([[+banner_image_mobile]]); border: 10px solid orange;">
+        <div class="title">
+            <p class="h4">[[+location_thumbnail]]</p>
+        </div>
+        <a href="[[+dest_link]]"></a>
+    </div>
+  
+    <div class="thumb" style="border: 2px solid red;">
+       [[+location_thumbnail]]
+    <a class="thumb_link" href="[[+dest_link]]" data-link="[[+dest_link]]">Go</a>
+    </div>
+</div>
+
+    
+</div>
+

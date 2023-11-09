@@ -1,0 +1,101 @@
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+
+        // get mainslide wrapper
+        let mainSlideContainer = document.querySelector(".main_fade_slide");
+
+        // create main slide div
+        let mainImage = document.createElement("div");
+        mainImage.setAttribute("class", "main_slide_item");
+
+        // make first itemn in array visible
+        $(".main_slide_item").first().addClass("active");
+
+        // attach slide itenm to wrapper
+        mainSlideContainer.append(mainImage);
+
+        $(".main_fade_slide").each(function () {
+
+            // dynamically pulls in image from class name via modx
+
+        });
+
+
+        // get thumbnail carousel wrapper
+        let thumbSlideContainer = document.querySelector(".test-slides-container");
+
+        // create thumb slide inner carousel container div
+        let thumbImageInner = document.createElement("div");
+        thumbImageInner.setAttribute("class", "thumb-slide-inner");
+
+        // attach thumb slide to thumb parent container
+        thumbSlideContainer.appendChild(thumbImageInner);
+
+        // loop through array
+        $(".hidden_thumb_slide").each(function(index){
+
+            // get source miodx data to put into slide
+            thumb_image = $(this).find(".thumb img").attr("src");
+            thumb_title = $(this).find(".title p.h4 img").attr("title");
+            thumb_link = $(this).find(".thumb_link").attr('data-link');
+
+            // create thumb item html component
+            let showMainSlide = `
+                <div class="test-slide" data-slideindex=${index}>
+                    <div class="ThumbImgTop_Pointer thumbnail_show_pin"></div>
+                    <div class="image-bg-div" style="background:url(${thumb_image});">
+                        <p class="h4 main_title">${thumb_title}</p>
+                        <a href="${thumb_link}" class="ctalink go-button thumbnail_show_button" href="${thumb_link}"><span>Go</span><i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            `;
+
+            // attach dynamic html looped array components to inner slider carousel container
+            thumbImageInner.innerHTML += showMainSlide;
+
+            // Add this variable to keep track of the current active slide index
+            let activeSlideIndex = 8; // Start with slide index 8
+
+            // Function to change the active slide
+            function changeActiveSlide() {
+                // Update the active slide index
+                activeSlideIndex++;
+
+                let carouselItems = document.querySelector(".slide-item")
+
+                // Check if the activeSlideIndex exceeds the total number of slides
+                // if (activeSlideIndex > carouselItems.length) {
+                    activeSlideIndex = 0; // Reset to slide index 8
+                // }
+
+                // Update the visible part of the thumbnail carousel
+                const slideElements = document.querySelectorAll(".test-slide");
+                slideElements.forEach((slide) => {
+                    const slideIndex = parseInt(slide.getAttribute("data-slideindex"), 10);
+                    if (slideIndex === activeSlideIndex) {
+                        slide.classList.add("active"); // You can define a CSS class for the active slide
+                    } else {
+                        slide.classList.remove("active");
+                    }
+                });
+            }
+
+            // Set an interval to change the active slide every N milliseconds (e.g., 3000ms for 3 seconds)
+            const autoplayInterval = setInterval(changeActiveSlide, 3000);
+
+            // Clear the interval when the user interacts with the carousel (e.g., on mouseover)
+            thumbSlideContainer.addEventListener("mouseover", () => {
+                clearInterval(autoplayInterval);
+            });
+
+            // Restart the autoplay when the user stops interacting with the carousel (e.g., on mouseout)
+            thumbSlideContainer.addEventListener("mouseout", () => {
+                autoplayInterval = setInterval(changeActiveSlide, 3000);
+            });
+
+        });
+
+        
+        
+    });
+</script>

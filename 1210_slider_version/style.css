@@ -1,0 +1,47 @@
+.main_slider{
+    border: solid 2px magenta;
+}
+
+.slide {
+    border: 2px solid rebeccapurple;
+}
+
+.dynamic_slide_item {
+    border: 2px solid lime;
+}
+
+p.h4.main_title {
+    color: #fff;
+    font-size: 2rem;
+    background: #59c6e7;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 2rem;
+    width: 30%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-bg-div {
+    border: 2px solid orange;
+    height: 66vh;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-color: rgba(148, 0, 211, 0.3);
+}
+
+.thumbnail_slider {
+    border: 2px solid red;
+    width: 100%;
+}
+
+.dynamic_thumb_slide_item {
+    border: 2px solid blue;
+    width: calc(100%/ 8);
+}
+
+
+

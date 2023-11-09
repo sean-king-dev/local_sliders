@@ -1,0 +1,98 @@
+.slider_inner {
+    border: 2px solid red;
+}
+
+.main_slide_item {
+    border: 2px dotted green;
+}
+
+.main_slide_wrapper {
+    width: 90%;
+    margin: 0 auto;
+    display: none;
+    border: 10px solid lime;
+}
+
+.slide-body-image {
+    /* display: none; */
+    border: 2px dotted purple;
+    height: 66vh;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+}
+
+.main_slide_wrapper {
+    display: none;
+}
+
+.main_slide_wrapper.active {
+    display: block;
+    border: 10px solid magenta;
+}
+
+h5.card-title{
+    background: cornflowerblue; 
+    padding: 1rem; 
+    color: #fff; 
+    text-align: center;
+    text-transform: uppercase; 
+    font-size: 2rem;
+    font-family: sans-serif;
+}
+
+a.ctalink {
+    color: #fff;
+    font-size: 1rem;
+    padding: 1rem;
+    width: 40%;
+    margin: 0 auto;
+    text-decoration: none;
+    background: black;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: -50%;
+}
+
+/* CSS for the slide container */
+.slider-inner {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* CSS for individual slides */
+  .main_slide_wrapper {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: opacity 1s; /* Use a 1-second transition for the fade effect */
+  }
+  
+  /* Initial style for the first slide */
+  .main_slide_wrapper:first-child {
+    display: block;
+  }
+
+/* @keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out{
+    100% {
+        opacity: 0;
+    }
+
+    0% {
+        opacity: 1;
+    }
+} */
+

@@ -1,0 +1,136 @@
+        /* CSS for the main slideshow */
+        .main_slide_items {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 75vh;
+        }
+
+        .main_slide_item {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main_slide_item.active {
+            opacity: 1;
+        }
+
+        .main_slide_item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-controls {
+            display: none;
+        }
+
+        /* CSS for the thumbnail slider container */
+        .thumbnail_container {
+            width: 80%;
+            margin: 0 auto;
+            /* overflow: hidden; */
+        }
+
+        .thumbnail_wrapper {
+            margin-top: -12%;
+        }
+
+        #thumbnail-slider {
+            display: flex;
+        }
+
+        /* CSS for individual thumbnail slides */
+        .thumbnail_slider {
+            width: 100%;
+            display: flex;
+            transition: transform 0.5s;
+        }
+
+        .thumbnail_slide {
+            width: calc(100% / 8);
+            cursor: pointer;
+            transition: border 0.3s;
+            border: 2px solid transparent;
+            position: relative;
+            height: 200px;
+        }
+
+        .thumbnail_slide img {
+            background-size: cover;
+            object-fit: contain;
+            background: yellow;
+        }
+
+        .thumbnail_slide.active {
+            border: 2px solid #333;
+        }
+
+        .thumbnail_slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail_buttons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .thumbnail_buttons a,
+        .thumbnail_buttons button {
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            display: none; /* Hide the buttons by default */
+        }
+
+        .thumbnail_slide.active .thumbnail_buttons a,
+        .thumbnail_slide.active .thumbnail_buttons button {
+            display: block; /* Display the buttons when the slide is active */
+        }
+
+        /* CSS for thumbnail slider controls */
+        .thumbnail-controls {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .thumbnail-controls button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .thumb_button {
+            font-size: 5rem;
+            color: #59c6e7;
+            text-decoration: none;
+        }
+
+        a#prev_button.thumb_button {
+            border: 1px solid green;
+            position: relative;
+            left: -2%;
+        }
+
+        a#next_button.thumb_button {
+            border: 1px solid red;
+            position: relative;
+            right: -98%;
+        }

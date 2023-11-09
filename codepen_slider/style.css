@@ -1,0 +1,10 @@
+#slider_wrapper {
+    border: 2px solid lime;
+    height: 500px;
+  }
+  
+  .slide {
+    border: 2px solid red;
+    background: palegreen;
+    min-width: calc(100% / 4);
+  }

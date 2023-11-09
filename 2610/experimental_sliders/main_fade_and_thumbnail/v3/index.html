@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* CSS for the main slideshow */
+        .main_slide_items {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .main_slide_item {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main_slide_item.active {
+            opacity: 1;
+        }
+
+        .main_slide_item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* CSS for the thumbnail slider container */
+        .thumbnail_container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #thumbnail-slider {
+            display: flex;
+        }
+
+        /* CSS for individual thumbnail slides */
+        .thumbnail_slide {
+            width: calc(100% / 8);
+            cursor: pointer;
+            transition: border 0.3s;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .thumbnail_slide.active {
+            border: 2px solid #333;
+        }
+
+        .thumbnail_slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail_buttons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .thumbnail_buttons a,
+        .thumbnail_buttons button {
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            display: none; /* Hide the buttons by default */
+        }
+
+        .thumbnail_slide.active .thumbnail_buttons a,
+        .thumbnail_slide.active .thumbnail_buttons button {
+            display: block; /* Display the buttons when the slide is active */
+        }
+
+        /* CSS for thumbnail slider controls */
+        .thumbnail-controls {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .thumbnail-controls button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="main_slide_items" id="slideshow-container"></div>
+    <div class="carousel-controls">
+        <button onclick="previousSlide()">Previous</button>
+        <button onclick="nextSlide()">Next</button>
+    </div>
+    <div class="thumbnail_container" id="thumbnail-container">
+        <div id="thumbnail-slider"></div>
+    </div>
+    <div class="thumbnail-controls">
+        <button onclick="previousThumbnailSlide()">Previous</button>
+        <button onclick="nextThumbnailSlide()">Next</button>
+    </div>
+
+    <script>
+        const locations = [
+            {
+                id: '1',
+                title: 'Oxford',
+                image: 'https://placehold.co/1920x1080?text=Oxford',
+                ctaLink: 'https://en.wikipedia.org/wiki/Oxford'
+            },
+            {
+                id: '2',
+                title: 'Hove',
+                image: 'https://placehold.co/1920x1080?text=Hove',
+                ctaLink: 'https://en.wikipedia.org/wiki/Hove'
+            },
+            {
+                id: '3',
+                title: 'London',
+                image: 'https://placehold.co/1920x1080?text=London',
+                ctaLink: 'https://en.wikipedia.org/wiki/London'
+            },
+            {
+                id: '4',
+                title: 'Crouch End',
+                image: 'https://placehold.co/1920x1080?text=Crouch+End',
+                ctaLink: 'https://en.wikipedia.org/wiki/Crouch_End'
+            },
+            {
+                id: '5',
+                title: 'Battersea',
+                image: 'https://placehold.co/1920x1080?text=Battersea',
+                ctaLink: 'https://en.wikipedia.org/wiki/Battersea'
+            },
+            {
+                id: '6',
+                title: 'Hackney',
+                image: 'https://placehold.co/1920x1080?text=Hackney',
+                ctaLink: 'https://en.wikipedia.org/wiki/Hackney'
+            },
+            {
+                id: '7',
+                title: 'Hammersmith',
+                image: 'https://placehold.co/1920x1080?text=Hammersmith',
+                ctaLink: 'https://en.wikipedia.org/wiki/Hammersmith'
+            },
+            {
+                id: '8',
+                title: 'Putney',
+                image: 'https://placehold.co/1920x1080?text=Putney',
+                ctaLink: 'https://en.wikipedia.org/wiki/Putney'
+            },
+            {
+                id: '9',
+                title: 'Archway',
+                image: 'https://placehold.co/1920x1080?text=Archway',
+                ctaLink: 'https://en.wikipedia.org/wiki/Archway'
+            },
+            {
+                id: '10',
+                title: 'Nunhead',
+                image: 'https://placehold.co/1920x1080?text=Nunhead',
+                ctaLink: 'https://en.wikipedia.org/wiki/Nunhead'
+            }
+        ];
+
+        const slideContainer = document.querySelector('.main_slide_items');
+        const thumbnailSlider = document.getElementById('thumbnail-slider');
+        let currentSlideIndex = 0;
+        let currentThumbnailIndex = 0;
+
+        function createMainSlide(location) {
+            const slide = document.createElement('div');
+            slide.className = 'main_slide_item';
+            slide.innerHTML = `
+                <img src="${location.image}" alt="${location.title}">
+                <h3>${location.title}</h3>
+                <a href="${location.ctaLink}" target="_blank">Learn More</a>
+            `;
+            slideContainer.appendChild(slide);
+        }
+
+        function createThumbnailSlide(location, index) {
+            const thumbnailSlide = document.createElement('div');
+            thumbnailSlide.className = 'thumbnail_slide';
+            thumbnailSlide.innerHTML = `
+                <img src="${location.image}" alt="${location.title}">
+                <div class="thumbnail_buttons">
+                    <a href="${location.ctaLink}" target="_blank">Go</a>
+                    <button>Hi</button>
+                </div>
+            `;
+            thumbnailSlide.addEventListener('click', () => showSlide(index));
+            thumbnailSlider.appendChild(thumbnailSlide);
+        }
+
+        // Create and append the main slides and thumbnail slides
+        locations.forEach((location, index) => {
+            createMainSlide(location);
+            createThumbnailSlide(location, index);
+
+            if (index === 0) {
+                const slide = slideContainer.children[index];
+                slide.classList.add('active');
+                const thumbnailSlide = thumbnailSlider.children[index];
+                thumbnailSlide.classList.add('active');
+            }
+        });
+
+        function showSlide(index) {
+            currentSlideIndex = index;
+            const slides = document.querySelectorAll('.main_slide_item');
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const thumbnailSlides = document.querySelectorAll('.thumbnail_slide');
+            thumbnailSlides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+        }
+
+        function showThumbnailSlide(index) {
+            currentThumbnailIndex = index;
+            const thumbnailSlides = document.querySelectorAll('.thumbnail_slide');
+            thumbnailSlides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            })
+        }
+
+        function nextSlide() {
+            currentSlideIndex = (currentSlideIndex + 1) % locations.length;
+            showSlide(currentSlideIndex);
+        }
+
+        function previousSlide() {
+            currentSlideIndex = (currentSlideIndex - 1 + locations.length) % locations.length;
+            showSlide(currentSlideIndex);
+        }
+
+        function nextThumbnailSlide() {
+            currentThumbnailIndex = (currentThumbnailIndex + 1) % locations.length;
+            showThumbnailSlide(currentThumbnailIndex);
+        }
+
+        function previousThumbnailSlide() {
+            currentThumbnailIndex = (currentThumbnailIndex - 1 + locations.length) % locations.length;
+            showThumbnailSlide(currentThumbnailIndex);
+        }
+
+        // Initial display
+        showSlide(currentSlideIndex);
+
+        // Set an interval to change the slide every 3 seconds
+        const mainCarouselInterval = setInterval(nextSlide, 3000);
+ 
+        // Set an interval to change the thumbnail slide every 3 seconds
+        const thumbnailCarouselInterval = setInterval(nextThumbnailSlide, 3000);
+    </script>
+</body>
+</html>
