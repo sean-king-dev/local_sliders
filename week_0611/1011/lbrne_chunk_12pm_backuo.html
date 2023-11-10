@@ -1,0 +1,562 @@
+<script>  
+
+    window.addEventListener("DOMContentLoaded", function () {
+    
+      var slides = document.querySelectorAll('.main_fade_slide');
+      console.log('Number of slides found:', slides.length);
+    
+      var jsonArray = [];
+    
+      slides.forEach(function (slide, index) {
+    
+        var mainSlideItem = slide.querySelector('.main_slide_item');
+        var mainImgDiv = slide.querySelector('.main_img_div');
+        var mobileSlideItem = slide.querySelector('.mobile_slide_item');
+        var mobileImgDiv = slide.querySelector('.mobile_img_div');
+        var thumbLink = slide.querySelector('.thumb_link');
+        var thumbImg = slide.querySelector('.thumb img');
+    
+        // error checking
+        if (!mainSlideItem || !mainImgDiv || !mobileSlideItem || !mobileImgDiv || !thumbLink || !thumbImg) {
+          console.error('Missing elements in slide number', index);
+          return;
+        }
+    
+        var jsonObj = {
+          desktop: {
+            link: mainSlideItem.getAttribute('data-link'),
+            backgroundImage: mainSlideItem.style.backgroundImage.slice(5, -2).replace(/"/g, ""),
+            image: mainImgDiv.src,
+            altText: mainImgDiv.alt
+          },
+          mobile: {
+            link: mobileSlideItem.getAttribute('data-link'),
+            backgroundImage: mobileSlideItem.style.backgroundImage.slice(5, -2).replace(/"/g, ""),
+            image: mobileImgDiv.src,
+            altText: mobileImgDiv.alt
+          },
+          thumbnail: {
+            link: thumbLink.getAttribute('href'),
+            image: thumbImg.src,
+            altText: thumbImg.alt,
+            title: thumbImg.title
+          }
+        };
+        jsonArray.push(jsonObj);
+      });
+    
+      if (jsonArray.length === 0) {
+        console.error('No slides were added to the array. Check the class names and HTML structure.');
+        return;
+      }
+    
+      function createCarousels(slidesArray) {
+    
+        const createDesktopSlide = (slide) => `
+          <div class="main_slide_item" style="background-image: url('${slide.desktop.backgroundImage}');">
+            <img class="main_img_div" src="${slide.desktop.image}" alt="${slide.desktop.altText}">
+            <a href="${slide.desktop.link}"></a>
+          </div>
+        `;
+    
+        const createThumbnailSlide = (slide) => `
+          <div class="thumb_slide_item">
+            <div class="thumb_item_location_wrapper">
+              <div class="ThumbImgTop_Pointer thumbnail_show_pin"></div>
+              <p class="h5 location_title">${slide.thumbnail.title}</p>
+              <img src="${slide.thumbnail.image}" alt="${slide.thumbnail.altText}" title="${slide.thumbnail.title}">
+      
+              <a href="${slide.thumbnail.link}" class="thumb_link thumb-cta-link-dynamic show-go">
+                <span class="go-button">Go</span>
+                <i class="fa fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        `;
+    
+        let desktopCarouselHTML = '<div class="desktop_carousel">';
+        let thumbnailCarouselHTML = '<div class="thumbnail_carousel">';
+    
+        slidesArray.forEach((slide) => {
+          desktopCarouselHTML += createDesktopSlide(slide);
+          thumbnailCarouselHTML += createThumbnailSlide(slide);
+        });
+    
+        desktopCarouselHTML += '</div>';
+        thumbnailCarouselHTML += '</div>';
+    
+        return {
+          desktopCarouselHTML,
+          thumbnailCarouselHTML
+        };
+      }
+    
+      const carouselsHTML = createCarousels(jsonArray);
+    
+      var desktopCarouselContainer = document.getElementById('desktopCarouselContainer');
+      var thumbnailCarouselContainer = document.getElementById('thumbnailCarouselContainer');
+    
+      if (desktopCarouselContainer && thumbnailCarouselContainer) {
+        desktopCarouselContainer.innerHTML = carouselsHTML.desktopCarouselHTML;
+        thumbnailCarouselContainer.innerHTML = carouselsHTML.thumbnailCarouselHTML;
+    
+        console.log('Carousels populated and navigation set up successfully.');
+      } else {
+        console.error('Carousel containers not found.');
+      }
+    
+      setupCarouselInterval(desktopCarouselContainer, '.main_slide_item', 3000);
+      setupCarouselInterval(thumbnailCarouselContainer, '.thumb_slide_item', 3000, true);
+    
+      setupButtonEvents(desktopCarouselContainer, '.main_slide_item');
+      setupButtonEvents(thumbnailCarouselContainer, '.thumb_slide_item');
+    
+      function setupButtonEvents(carouselContainer, slideSelector) {
+        var nextButton = document.getElementById('slide-arrow-next');
+        var prevButton = document.getElementById('slide-arrow-prev');
+    
+        var desktopSlides = desktopCarouselContainer.querySelectorAll('.main_slide_item');
+        var thumbSlides = thumbnailCarouselContainer.querySelectorAll('.thumb_slide_item');
+        let currentActiveIndex = 0;
+    
+        function updateActiveSlide(index) {
+          desktopSlides.forEach(slide => slide.classList.remove('active'));
+          thumbSlides.forEach(slide => slide.classList.remove('active'));
+    
+          desktopSlides[index].classList.add('active');
+          thumbSlides[index].classList.add('active');
+        }
+    
+        nextButton.addEventListener('click', function () {
+          currentActiveIndex = (currentActiveIndex + 1) % desktopSlides.length;
+          updateActiveSlide(currentActiveIndex);
+          scrollToIndex(currentActiveIndex); // Add this line to scroll to the selected index
+        });
+    
+        prevButton.addEventListener('click', function () {
+          currentActiveIndex = (currentActiveIndex - 1 + desktopSlides.length) % desktopSlides.length;
+          updateActiveSlide(currentActiveIndex);
+          scrollToIndex(currentActiveIndex); // Add this line to scroll to the selected index
+        });
+      }
+    
+      function setupCarouselInterval(carouselContainer, slideSelector, interval, isThumbnail = false) {
+        let currentActiveIndex = 0;
+        let slides = carouselContainer.querySelectorAll(slideSelector);
+    
+        function updateActiveSlide() {
+          slides.forEach(slide => slide.classList.remove('active'));
+          slides[currentActiveIndex].classList.add('active');
+    
+          if (isThumbnail) {
+            scrollToThumbnail(slides, currentActiveIndex, carouselContainer);
+          }
+    
+          currentActiveIndex = (currentActiveIndex + 1) % slides.length;
+        }
+    
+        updateActiveSlide();
+    
+        setInterval(updateActiveSlide, interval);
+      }
+    
+      // function scrollToThumbnail(slides, index, container) {
+      //   const thumbSlideItem = slides[index];
+      //   const thumbSlideItemRect = thumbSlideItem.getBoundingClientRect();
+      //   const thumbSlideItemWidth = thumbSlideItemRect.width;
+      //   const containerRect = container.getBoundingClientRect();
+    
+      //   const centerPosition = thumbSlideItemRect.left - containerRect.left + thumbSlideItemWidth / 1.1;
+      //   const containerCenter = containerRect.width / 1.1;
+      //   let scrollPosition = container.scrollLeft + centerPosition - containerCenter;
+    
+      //   const maxScrollPosition = container.scrollWidth - container.offsetWidth;
+      //   scrollPosition = Math.max(0, Math.min(maxScrollPosition, scrollPosition));
+      //   container.scrollTo({
+      //     left: scrollPosition,
+      //     behavior: 'smooth',
+      //   });
+      // }
+    
+      // version 1016am 101123
+    //   function scrollToThumbnail(slides, index, container) {
+    //     const thumbSlideItem = slides[index];
+    //     const thumbSlideItemRect = thumbSlideItem.getBoundingClientRect();
+    //     const thumbSlideItemWidth = thumbSlideItemRect.width;
+    //     const containerRect = container.getBoundingClientRect();
+    
+    //     // Assuming thumb_slide_item width is calculated using calc(100%/8)
+    //     const thumbSlideItemCount = 8;
+    //     const thumbSlideItemWidthCSS = (100 / thumbSlideItemCount);
+    //     const thumbSlideItemTotalWidth = (thumbSlideItemWidthCSS / thumbSlideItemCount); // Adjust this if your setup is different
+    //     const centerPosition = thumbSlideItemTotalWidth * index + thumbSlideItemTotalWidth / 2;
+    
+    //     const containerCenter = containerRect.width / 2;
+    //     let scrollPosition = centerPosition - containerCenter;
+    
+    //     const maxScrollPosition = container.scrollWidth - container.offsetWidth;
+    //     scrollPosition = Math.max(0, Math.min(maxScrollPosition, scrollPosition));
+        
+    //     container.scrollTo({
+    //         left: scrollPosition,
+    //         behavior: 'smooth',
+    //     });
+    // }
+    
+    //v 1053am
+    // function scrollToThumbnail(slides, index, container) {
+    //     const thumbSlideItem = slides[index];
+    //     const thumbSlideItemRect = thumbSlideItem.getBoundingClientRect();
+    //     const thumbSlideItemWidth = thumbSlideItemRect.width;
+    //     const containerRect = container.getBoundingClientRect();
+    
+    //     // Assuming thumb_slide_item width is calculated using calc(100%/8)
+    //     const thumbSlideItemCount = 4;
+    //     const thumbSlideItemTotalWidth = 100 / thumbSlideItemCount; // Adjust this if your setup is different
+    //     const centerPosition = thumbSlideItemTotalWidth * index + thumbSlideItemTotalWidth / 3 ;
+    
+    //     const containerCenter = containerRect.width / 3;
+    //     let scrollPosition = centerPosition - containerCenter;
+    
+    //     const maxScrollPosition = container.scrollWidth - container.offsetWidth;
+    //     scrollPosition = Math.max(0, Math.min(maxScrollPosition, scrollPosition));
+    
+    //     if (index >= thumbSlideItemCount) {
+    //         // Automatically scroll to the active slide if it is greater than the 8th slide
+    //         container.scrollTo({
+    //             left: scrollPosition,
+    //             behavior: 'smooth',
+    //         });
+    //     } else {
+    //         // If the active slide is within the visible range, adjust the scrollLeft
+    //         container.scrollTo({
+    //             left: 0,
+    //             behavior: 'smooth',
+    //         });
+    //     }
+    // }
+    
+    // v 1049
+    // function scrollToThumbnail(slides, index, container) {
+    //     const thumbSlideItem = slides[index];
+    //     const thumbSlideItemRect = thumbSlideItem.getBoundingClientRect();
+    //     const thumbSlideItemWidth = thumbSlideItemRect.width;
+    //     const containerRect = container.getBoundingClientRect();
+    
+    //     // Calculate thumbSlideItemCount based on the length of the slides array
+    //     const thumbSlideItemCount = slides.length;
+    //     const thumbSlideItemTotalWidth = 100 / thumbSlideItemCount; // Adjust this if your setup is different
+    //     const centerPosition = thumbSlideItemTotalWidth * index + thumbSlideItemTotalWidth / 2;
+    
+    //     const containerCenter = containerRect.width / 2;
+    //     let scrollPosition = centerPosition - containerCenter;
+    
+    //     const maxScrollPosition = container.scrollWidth - container.offsetWidth;
+    //     scrollPosition = Math.max(0, Math.min(maxScrollPosition, scrollPosition));
+    
+    //     if (index >= thumbSlideItemCount) {
+    //         // Automatically scroll to the active slide if it is greater than the thumbSlideItemCount
+    //         container.scrollTo({
+    //             left: scrollPosition,
+    //             behavior: 'smooth',
+    //         });
+    //     } else {
+    //         // If the active slide is within the visible range, adjust the scrollLeft
+    //         container.scrollTo({
+    //             left: 0,
+    //             behavior: 'smooth',
+    //         });
+    //     }
+    // }
+    
+    // v 1056
+    // function scrollToThumbnail(slides, index, container) {
+    //     const thumbSlideItem = slides[index];
+    //     const thumbSlideItemRect = thumbSlideItem.getBoundingClientRect();
+    //     const thumbSlideItemWidth = thumbSlideItemRect.width;
+    //     const containerRect = container.getBoundingClientRect();
+    
+    //     const thumbSlideItemCount = slides.length;
+    //     const thumbSlideItemTotalWidth = 100 / thumbSlideItemCount;
+    
+    //     const centerPosition = thumbSlideItemTotalWidth * index + thumbSlideItemTotalWidth / 2;
+    //     const containerCenter = containerRect.width / 2;
+        
+    //     let scrollPosition = centerPosition - containerCenter;
+    
+    //     // Ensure the active slide is completely visible
+    //     const maxVisibleSlideIndex = thumbSlideItemCount - Math.ceil(containerRect.width / thumbSlideItemWidth);
+    //     const visibleIndex = Math.min(maxVisibleSlideIndex, index);
+    
+    //     scrollPosition = thumbSlideItemTotalWidth * visibleIndex;
+    
+    //     const maxScrollPosition = container.scrollWidth - container.offsetWidth;
+    //     scrollPosition = Math.max(0, Math.min(maxScrollPosition, scrollPosition));
+    
+    //     container.scrollTo({
+    //         left: scrollPosition,
+    //         behavior: 'smooth',
+    //     });
+    // }
+    
+    // // v 1058
+    // function scrollToThumbnail(slides, index, container) {
+    //     const thumbSlideItem = slides[index];
+    //     const thumbSlideItemRect = thumbSlideItem.getBoundingClientRect();
+    //     const thumbSlideItemWidth = thumbSlideItemRect.width;
+    //     const containerRect = container.getBoundingClientRect();
+    
+    //     const thumbSlideItemCount = slides.length;
+    //     const thumbSlideItemTotalWidth = 100 / thumbSlideItemCount;
+    
+    //     // Calculate the scroll position to ensure the active slide is fully visible
+    //     const maxVisibleSlideIndex = thumbSlideItemCount - Math.ceil(containerRect.width / thumbSlideItemWidth);
+    //     const visibleIndex = Math.min(maxVisibleSlideIndex, index);
+    
+    //     const scrollPosition = thumbSlideItemTotalWidth * visibleIndex;
+    
+    //     // thumbSlideItem.scrollTo({
+    //     //     left: scrollPosition * container.scrollWidth, // Convert percentage to pixels
+    //     //     behavior: 'smooth',
+    //     // });
+    
+    //     thumbSlideItem.scrollToThumbnail({
+    //       behaviour: 'smooth',
+    //       inline: 'nearest',
+    //     });
+    // }
+    
+    
+    
+    
+    
+    
+        function scrollToThumbnail(slides, index, container) {
+          const thumbSlideItem = slides[index];
+          const thumbSlideItemRect = thumbSlideItem.getBoundingClientRect();
+          const thumbSlideItemWidth = thumbSlideItemRect.width;
+          const containerRect = container.getBoundingClientRect();
+        
+          const centerPosition = thumbSlideItemRect.left - containerRect.left + thumbSlideItemWidth / 1.1;
+          const containerCenter = containerRect.width / 1.1;
+          let scrollPosition = container.scrollLeft + centerPosition - containerCenter;
+        
+          const maxScrollPosition = container.scrollWidth - container.offsetWidth;
+          scrollPosition = Math.max(0, Math.min(maxScrollPosition, scrollPosition));
+        
+          
+        
+          // thumbSlideItem.scrollIntoView({
+          //   behavior: 'smooth',
+          //   inline: 'nearest',
+          //   block: 'end'
+          // });
+        
+        
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    });
+    
+    
+    
+    
+    // v8 091123
+    // window.addEventListener("DOMContentLoaded", function () {
+    
+    // var slides = document.querySelectorAll('.main_fade_slide');
+    // console.log('Number of slides found:', slides.length);
+    
+    // var jsonArray = [];
+    
+    // slides.forEach(function (slide, index) {
+    
+    //   var mainSlideItem = slide.querySelector('.main_slide_item');
+    //   var mainImgDiv = slide.querySelector('.main_img_div');
+    //   var mobileSlideItem = slide.querySelector('.mobile_slide_item');
+    //   var mobileImgDiv = slide.querySelector('.mobile_img_div');
+    //   var thumbLink = slide.querySelector('.thumb_link');
+    //   var thumbImg = slide.querySelector('.thumb img');
+    
+    //   // error checking
+    //   if (!mainSlideItem || !mainImgDiv || !mobileSlideItem || !mobileImgDiv || !thumbLink || !thumbImg) {
+    //     console.error('Missing elements in slide number', index);
+    //     return;
+    //   }
+    
+    //   var jsonObj = {
+    //     desktop: {
+    //       link: mainSlideItem.getAttribute('data-link'),
+    //       backgroundImage: mainSlideItem.style.backgroundImage.slice(5, -2).replace(/"/g, ""),
+    //       image: mainImgDiv.src,
+    //       altText: mainImgDiv.alt
+    //     },
+    //     mobile: {
+    //       link: mobileSlideItem.getAttribute('data-link'),
+    //       backgroundImage: mobileSlideItem.style.backgroundImage.slice(5, -2).replace(/"/g, ""),
+    //       image: mobileImgDiv.src,
+    //       altText: mobileImgDiv.alt
+    //     },
+    //     thumbnail: {
+    //       link: thumbLink.getAttribute('href'),
+    //       image: thumbImg.src,
+    //       altText: thumbImg.alt,
+    //       title: thumbImg.title
+    //     }
+    //   };
+    //   jsonArray.push(jsonObj);
+    // });
+    
+    // if (jsonArray.length === 0) {
+    //   console.error('No slides were added to the array. Check the class names and HTML structure.');
+    //   return;
+    // }
+    
+    // function createCarousels(slidesArray) {
+    
+    //   const createDesktopSlide = (slide) => `
+    //     <div class="main_slide_item" style="background-image: url('${slide.desktop.backgroundImage}');">
+    //       <img class="main_img_div" src="${slide.desktop.image}" alt="${slide.desktop.altText}">
+    //       <a href="${slide.desktop.link}"></a>
+    //     </div>
+    //   `;
+    
+    //   const createThumbnailSlide = (slide) => `
+    //     <div class="thumb_slide_item">
+    //       <div class="thumb_item_location_wrapper">
+    //         <div class="ThumbImgTop_Pointer thumbnail_show_pin"></div>
+    //         <p class="h5 location_title">${slide.thumbnail.title}</p>
+    //         <img src="${slide.thumbnail.image}" alt="${slide.thumbnail.altText}" title="${slide.thumbnail.title}">
+    
+    //         <a href="${slide.thumbnail.link}" class="thumb_link thumb-cta-link-dynamic show-go">
+    //           <span class="go-button">Go</span>
+    //           <i class="fa fa-arrow-right"></i>
+    //         </a>
+    //       </div>
+    //     </div>
+    //   `;
+    
+    //   let desktopCarouselHTML = '<div class="desktop_carousel">';
+    //   let thumbnailCarouselHTML = '<div class="thumbnail_carousel">';
+    
+    //   slidesArray.forEach((slide) => {
+    //     desktopCarouselHTML += createDesktopSlide(slide);
+    //     thumbnailCarouselHTML += createThumbnailSlide(slide);
+    //   });
+    
+    //   desktopCarouselHTML += '</div>';
+    //   thumbnailCarouselHTML += '</div>';
+    
+    //   return {
+    //     desktopCarouselHTML,
+    //     thumbnailCarouselHTML
+    //   };
+    // }
+    
+    // const carouselsHTML = createCarousels(jsonArray);
+    
+    // var desktopCarouselContainer = document.getElementById('desktopCarouselContainer');
+    // var thumbnailCarouselContainer = document.getElementById('thumbnailCarouselContainer');
+    
+    // if (desktopCarouselContainer && thumbnailCarouselContainer) {
+    //   desktopCarouselContainer.innerHTML = carouselsHTML.desktopCarouselHTML;
+    //   thumbnailCarouselContainer.innerHTML = carouselsHTML.thumbnailCarouselHTML;
+    
+    //   console.log('Carousels populated and navigation set up successfully.');
+    // } else {
+    //   console.error('Carousel containers not found.');
+    // }
+    
+    // setupCarouselInterval(desktopCarouselContainer, '.main_slide_item', 3000);
+    // setupCarouselInterval(thumbnailCarouselContainer, '.thumb_slide_item', 3000, true);
+    
+    // setupButtonEvents(desktopCarouselContainer, '.main_slide_item');
+    // setupButtonEvents(thumbnailCarouselContainer, '.thumb_slide_item');
+    
+    // function setupButtonEvents(carouselContainer, slideSelector) {
+    //   var nextButton = document.getElementById('slide-arrow-next');
+    //   var prevButton = document.getElementById('slide-arrow-prev');
+    
+    //   var desktopSlides = desktopCarouselContainer.querySelectorAll('.main_slide_item');
+    //   var thumbSlides = thumbnailCarouselContainer.querySelectorAll('.thumb_slide_item');
+    //   let currentActiveIndex = 0;
+    
+    //   function updateActiveSlide(index) {
+    //     desktopSlides.forEach(slide => slide.classList.remove('active'));
+    //     thumbSlides.forEach(slide => slide.classList.remove('active'));
+    
+    //     desktopSlides[index].classList.add('active');
+    //     thumbSlides[index].classList.add('active');
+    //   }
+    
+    //   nextButton.addEventListener('click', function () {
+    //     currentActiveIndex = (currentActiveIndex + 1) % desktopSlides.length;
+    //     updateActiveSlide(currentActiveIndex);
+    //   });
+    
+    //   prevButton.addEventListener('click', function () {
+    //     currentActiveIndex = (currentActiveIndex - 1 + desktopSlides.length) % desktopSlides.length;
+    //     updateActiveSlide(currentActiveIndex);
+    //   });
+    // }
+    
+    // function setupCarouselInterval(carouselContainer, slideSelector, interval, isThumbnail = false) {
+    //   let currentActiveIndex = 0;
+    //   let slides = carouselContainer.querySelectorAll(slideSelector);
+    
+    //   function updateActiveSlide() {
+    //     slides.forEach(slide => slide.classList.remove('active'));
+    //     slides[currentActiveIndex].classList.add('active');
+    
+    //     if (isThumbnail) {
+    //       scrollToThumbnail(slides, currentActiveIndex, carouselContainer);
+    //     }
+    
+    //     currentActiveIndex = (currentActiveIndex + 1) % slides.length;
+    //   }
+    
+    //   updateActiveSlide();
+    
+    //   setInterval(updateActiveSlide, interval);
+    // }
+    
+    // function scrollToThumbnail(slides, index, container) {
+    //   const thumbSlideItem = slides[index];
+    //   const thumbSlideItemRect = thumbSlideItem.getBoundingClientRect();
+    //   const thumbSlideItemWidth = thumbSlideItemRect.width;
+    //   const containerRect = container.getBoundingClientRect();
+    
+    //   const centerPosition = thumbSlideItemRect.left - containerRect.left + thumbSlideItemWidth / 1.1;
+    //   const containerCenter = containerRect.width / 1.1;
+    //   let scrollPosition = container.scrollLeft + centerPosition - containerCenter;
+    
+    //   const maxScrollPosition = container.scrollWidth - container.offsetWidth;
+    //   scrollPosition = Math.max(0, Math.min(maxScrollPosition, scrollPosition));
+    
+      
+    
+    //   // thumbSlideItem.scrollIntoView({
+    //   //   behavior: 'smooth',
+    //   //   inline: 'nearest',
+    //   //   block: 'end'
+    //   // });
+    
+    
+    // }
+    // });
+    
+    </script>
