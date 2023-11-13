@@ -135,7 +135,7 @@ a.thumb_link {
 </head>
 <body>
 
-    <section class="hiddendatacontent" style="display: none">
+    <section class="purecontent" style="display: none">
 
 
         <div class="main_fade_slide">
@@ -518,13 +518,8 @@ a.thumb_link {
 /////////////////////////////////////////////////////////////////////////////////
 document.addEventListener('DOMContentLoaded', function () {
     // Access the HTML content
-    const section = document.querySelector('.hiddendatacontent');
+    const section = document.querySelector('.purecontent');
     const mainSlides = section.querySelectorAll('.main_fade_slide');
-
-    ////////////////////////////////////////////////////////////////////////
-    // instantiate main_slide_item
-    let mainSlideArray = document.querySelectorAll(".main_slide_item");
-    let thumbSlideArray = document.querySelectorAll(".thumb_slide_item");
   
     // Create the main slide and thumbnail carousel using template literals
     let mainCarouselHTML = '';
@@ -569,9 +564,7 @@ document.addEventListener('DOMContentLoaded', function () {
     mainCarouselInner.innerHTML = mainCarouselHTML;
     thumbnailCarouselInner.innerHTML = thumbnailCarouselHTML;
 
-        // Add initial active class to the first slides
-    mainSlideArray[0].classList.add("active");
-    thumbSlideArray[0].classList.add("active");
+        
   });
   /////////////////////////////////////////////////////////////////////////////////
   
@@ -583,6 +576,9 @@ document.addEventListener('DOMContentLoaded', function () {
 // mainSlideItemZeroIndex.classList.add("active");
 
 ///////////////////////////////////////////////////////////////////////////////
+// instantiate main_slide_item
+let mainSlideArray = document.querySelectorAll(".main_slide_item");
+    let thumbSlideArray = document.querySelectorAll(".thumb_slide_item");
 
     // Add initial active class to the first slides
     mainSlideArray[0].classList.add("active");

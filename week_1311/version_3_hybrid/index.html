@@ -3,138 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
-
-    <style>
-        
-@media screen and (max-width:1024px) {
-    .mobile_slide_item {
-        display: none;
-    }
-}
-
-.main_slide_item  {
-    height: 66vh;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    min-width: 100%;
-    border: 2px dotted red;
-}
-
-.main_slide_item.active {
-    border: 4px solid lime;
-    display: block !important;
-}
-
-
-
-img.main_img_div {
-    border: 2px solid magenta;
-    margin: 0 auto;
-    width: 30%;
-    position: relative;
-    display: flex;
-    top: 40%;
-}
-
-section.thumb_carousel_section {
-    width: 80%;
-    margin: 0 auto;
-}
-
-.thumb_carousel_inner {
-    border: 2px solid black;
-    width: 100%;
-    display: flex;
-    overflow-x: scroll;
-}
-
-.thumb_slide_item {
-    border: 2px solid red;
-    min-width: calc(98%/8);
-}
-
-.thumb_slide_item.active{
-    border: 4px dashed aqua;
-}
-
-.thumb_slide_item img {
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    object-fit: cover;
-    width: 100%;
-    height: 200px;
-}
-
-.thumb_slider_button {
-    width: 110%;
-    border: 2px solid green;
-    margin: 0 auto;
-    position: relative;
-    left: -5%;
-    margin-top: -130px;
-}
-
-.slide-arrow {
-    color: #59c6e7;
-    font-size: 4rem;
-    font-weight: bold;
-    background-color: #fff;
-    border: none;
-}
-
-button#slide-arrow-next.slide-arrow {
-    /* border: 1px solid red; */
-    position: absolute;
-    right: 0;
-}
-
-p.h4.location_title {
-    background: #59c6e7;
-    padding: 1rem 0;
-    font-size: .8rem;
-    font-weight: bold;
-    font-family: sans-serif;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-transform: uppercase;
-}
-
-a.thumb_link {
-    background: black;
-    padding: 1rem;
-    border-radius: 50px;
-    color: #fff;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1rem;
-    width: 40%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-transform: uppercase;
-    text-decoration: none;
-    font-family: sans-serif;
-    position: relative;
-    margin-top: -30px;
-}
-
-.map_pin {
-  color: red;
-  font-weight: bold;
-  font-size: 2rem;
-  text-align:center;
-}
-    </style>
 </head>
 <body>
-
+    
     <section class="hiddendatacontent" style="display: none">
 
 
@@ -154,7 +27,7 @@ a.thumb_link {
                 <a href="https://en.wikipedia.org/wiki/Ascot,_Berkshire"></a>
             </div>
     
-            <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+            <div class="hidden_thumb_slide" id="secondary_thumbnail_slider" style="display:none">
     
     
                 <div class="thumb">
@@ -186,7 +59,7 @@ a.thumb_link {
                 <a href="https://en.wikipedia.org/wiki/Bath,_Somerset"></a>
             </div>
     
-            <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+            <div class="hidden_thumb_slide" id="secondary_thumbnail_slider" style="display:none">
     
     
                 <div class="thumb">
@@ -218,7 +91,7 @@ a.thumb_link {
                 <a href="https://en.wikipedia.org/wiki/Beckenham"></a>
             </div>
     
-            <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+            <div class="hidden_thumb_slide" id="secondary_thumbnail_slider" style="display:none">
     
     
                 <div class="thumb">
@@ -250,7 +123,7 @@ a.thumb_link {
                 <a href="https://en.wikipedia.org/wiki/Bournemouth"></a>
             </div>
     
-            <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+            <div class="hidden_thumb_slide" id="secondary_thumbnail_slider" style="display:none">
     
     
                 <div class="thumb">
@@ -282,7 +155,7 @@ a.thumb_link {
                 <a href="https://en.wikipedia.org/wiki/Caterham"></a>
             </div>
     
-            <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+            <div class="hidden_thumb_slide" id="secondary_thumbnail_slider" style="display:none">
     
     
                 <div class="thumb">
@@ -314,7 +187,7 @@ a.thumb_link {
                 <a href="https://en.wikipedia.org/wiki/London"></a>
             </div>
     
-            <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+            <div class="hidden_thumb_slide" id="secondary_thumbnail_slider" style="display:none">
     
     
                 <div class="thumb">
@@ -346,7 +219,7 @@ a.thumb_link {
                 <a href="https://en.wikipedia.org/wiki/Malibu"></a>
             </div>
     
-            <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+            <div class="hidden_thumb_slide" id="secondary_thumbnail_slider" style="display:none">
     
     
                 <div class="thumb">
@@ -380,7 +253,7 @@ a.thumb_link {
                 <a href="http://kingseducation.com/uk-uni"></a>
             </div>
     
-            <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+            <div class="hidden_thumb_slide" id="secondary_thumbnail_slider" style="display:none">
     
     
                 <div class="thumb">
@@ -412,7 +285,7 @@ a.thumb_link {
                 <a href="http://kingseducatiom.com/us-uni"></a>
             </div>
     
-            <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+            <div class="hidden_thumb_slide" id="secondary_thumbnail_slider" style="display:none">
     
     
                 <div class="thumb">
@@ -444,7 +317,7 @@ a.thumb_link {
                 <a href="http://kingseducation.com/unk-uni"></a>
             </div>
     
-            <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+            <div class="hidden_thumb_slide" id="secondary_thumbnail_slider" style="display:none">
     
     
                 <div class="thumb">
@@ -476,7 +349,7 @@ a.thumb_link {
                 <a href="http://kingseducation.com"></a>
             </div>
     
-            <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+            <div class="hidden_thumb_slide" id="secondary_thumbnail_slider" style="display:none">
     
     
                 <div class="thumb">
@@ -513,128 +386,7 @@ a.thumb_link {
         </section>
 
     </section>
-    
-    <script>
-/////////////////////////////////////////////////////////////////////////////////
-document.addEventListener('DOMContentLoaded', function () {
-    // Access the HTML content
-    const section = document.querySelector('.hiddendatacontent');
-    const mainSlides = section.querySelectorAll('.main_fade_slide');
 
-    ////////////////////////////////////////////////////////////////////////
-    // instantiate main_slide_item
-    let mainSlideArray = document.querySelectorAll(".main_slide_item");
-    let thumbSlideArray = document.querySelectorAll(".thumb_slide_item");
-  
-    // Create the main slide and thumbnail carousel using template literals
-    let mainCarouselHTML = '';
-    let thumbnailCarouselHTML = '';
-  ///////////////////////////////////////////////////////////////////////////
-    mainSlides.forEach((mainSlide, index) => {
-      const mainSlideItem = mainSlide.querySelector('.main_slide_item');
-      const thumbSlide = mainSlide.querySelector('.hidden_thumb_slide');
-      const bannerImg = mainSlideItem.querySelector('.main_img_div'); 
-  
-      const mainImageURL = mainSlideItem.style.backgroundImage
-        .replace('url(', '')
-        .replace(')', '')
-        .replace(/\"/gi, '');
-
-      const bannerImageURL = bannerImg.src; 
-      const mainLink = mainSlideItem.getAttribute('data-link');
-      const thumbImageURL = thumbSlide.querySelector('img').src;
-      const thumbLink = thumbSlide.querySelector('.thumb_link').getAttribute('data-link');
-      const thumbTitle = thumbSlide.querySelector('img').getAttribute('title');
-  
-      mainCarouselHTML += `
-        <div class="main_slide_item" data-link="${mainLink}" style="background-image:url(${mainImageURL});">
-          <img class="main_img_div" src="${bannerImageURL}" alt="Location banner">
-          <a href="${mainLink}"></a>
-        </div>
-      `;
-
-      const mainCarouselInner = document.querySelector('.main_carousel_inner');
-  
-      thumbnailCarouselHTML += `
-        <div class="thumb_slide_item">
-        <div class="map_pin show-pin">&#9906;</div>
-          <p class="h4 location_title">${thumbTitle} </p>
-          <img src="${thumbImageURL}" alt="Location Thumbnail" title="Thumbnail">
-          <a class="thumb_link" href="${thumbLink}" data-link="${thumbLink}"><span>Go</span><span class="go-arrow-right">&xrarr;</span></a>
-        </div>
-      `;
-    
-    const thumbnailCarouselInner = document.querySelector('.thumb_carousel_inner');
-  
-    mainCarouselInner.innerHTML = mainCarouselHTML;
-    thumbnailCarouselInner.innerHTML = thumbnailCarouselHTML;
-
-        // Add initial active class to the first slides
-    mainSlideArray[0].classList.add("active");
-    thumbSlideArray[0].classList.add("active");
-  });
-  /////////////////////////////////////////////////////////////////////////////////
-  
-  
-  // instantiate main_slide_item
-//   let mainSlideArray = document.querySelectorAll(".main_slide_item");
-//    let mainSlideItemZeroIndex = mainSlideArray[0];
-//    console.log(`"main item first slide " + ${mainSlideItemZeroIndex}`);
-// mainSlideItemZeroIndex.classList.add("active");
-
-///////////////////////////////////////////////////////////////////////////////
-
-    // Add initial active class to the first slides
-    mainSlideArray[0].classList.add("active");
-    thumbSlideArray[0].classList.add("active");
-
-    // Function to toggle active class for main slides
-    function toggleMainActiveClass() {
-        mainSlideArray.forEach((slide) => {
-            slide.classList.remove("active");
-        });
-
-        let currentIndex = Array.from(mainSlideArray).findIndex((slide) => slide.classList.contains("active"));
-        let nextIndex = (currentIndex + 1) % mainSlideArray.length;
-
-        mainSlideArray[nextIndex].classList.add("active");
-    }
-
-    // // instantiate main_slide_item and thumb_slide_item arrays
-    // let mainSlideArray = document.querySelectorAll(".main_slide_item");
-    // let thumbSlideArray = document.querySelectorAll(".thumb_slide_item");
-
-
-
-    // Function to toggle active class for main slides and thumb slides
-    function toggleActiveClasses() {
-        // Toggle active class for main slides
-        mainSlideArray.forEach((slide) => {
-            slide.classList.remove("active");
-        });
-
-        let mainCurrentIndex = Array.from(mainSlideArray).findIndex((slide) => slide.classList.contains("active"));
-        let mainNextIndex = (mainCurrentIndex + 1) % mainSlideArray.length;
-
-        mainSlideArray[mainNextIndex].classList.add("active");
-
-        // Toggle active class for thumb slides
-        thumbSlideArray.forEach((slide) => {
-            slide.classList.remove("active");
-        });
-
-        let thumbCurrentIndex = Array.from(thumbSlideArray).findIndex((slide) => slide.classList.contains("active"));
-        let thumbNextIndex = (thumbCurrentIndex + 1) % thumbSlideArray.length;
-
-        thumbSlideArray[thumbNextIndex].classList.add("active");
-    }
-
-    // Set interval to toggle active class every 1000ms (1 second) for both main and thumb slides
-    setInterval(toggleActiveClasses, 1000);
-});
-
-  
-
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
