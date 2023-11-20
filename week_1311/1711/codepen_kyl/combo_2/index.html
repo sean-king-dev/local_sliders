@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main_slide_inner {
+  display: flex;
+  overflow: hidden;
+}
+
+/* .location_item,  */
+.main-image-slide {
+  width: 100vw;
+  height: 60vh;
+  background-size: cover;
+  background-position: center center;
+  border: 2px solid red;
+}
+
+.main-image-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-image-slide .location-title {
+  background: #596ce7;
+  width: 25%;
+  text-align: center;
+  padding: 1rem;
+  text-transform: uppercase;
+  font-family: sans-serif;
+  color: #fff;
+  font-weight: bold;
+  font-size: 2rem;
+  border-top-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+.main-image-slide .cta-link {
+  display: none;
+}
+
+@media screen and (max-width: 992px) {
+  .thumb_carousel {
+    display: none;
+  }
+}
+
+.thumb_carousel {
+  border: 2px solid orange;
+  width: 80%;
+/*   height: 30vh; */
+  margin: auto;
+}
+.thumb_slide_inner {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  border: 2px dashed magenta;
+  height: 260px;
+  margin-top: -8vh;
+}
+
+.thumb_slide_item {
+  border: 1px solid black;
+  min-width: calc(98.7%/8);
+  max-width: calc(98.7%/8);
+}
+
+.thumb_slide_item .thumb-image-slide {
+  background-size: cover;
+  background-position: center center;
+  object-fit: cover;
+}
+
+.thumb-image-slide {
+/*   border: 1px solid purple; */
+  height: 180px;
+}
+
+.thumb_slider_button {
+  border: 2px solid green;
+/*   height: 30vh; */
+  width: 100%;
+  margin: 0 auto;
+  margin-left: -10%;
+  margin-top: -150px;
+}
+
+.slide-arrow {
+  color: #596ce7;
+  font-size: 4rem;
+  font-weight: bold;
+  text-decoration: none;
+} 
+
+#slide-arrow-prev {
+  position:  relative;
+  left: 5%;
+}
+
+#slide-arrow-next {
+  position: relative;
+  right: -110%;
+}
+
+.map_pin {
+  font-size: 2rem;
+  font-weight: bold;
+  color: red;
+  text-align: center;
+}
+
+.go-arrow {
+  margin-left: 10%;
+}
+
+.thumb-cta-link {
+  background: black;
+  color: white;
+  text-decoration: none;
+  padding: .5rem;
+  display: flex;
+  justify-content: center;
+  width: 40%;
+  margin: 0 auto;
+  border-radius: 20px;
+  position: relative;
+  bottom: -110px;
+}
+
+.thumb-image-slide .thumb-location-title {
+/*   border: 1px solid aqua; */
+  background: #596ce7;
+  color: #fff;
+  padding: .8rem;
+  text-align:center;
+  text-transform: uppercase;
+  font-family: sans-serif;
+  font-size: .7rem;
+/*   font-weight: bold; */
+  margin-top: -1.5vh;
+}
+
+.main_slide_inner {
+    height: 60vh;
+}
+
+.main_slide_item {
+    display: none;
+}
+
+.main_slide_item.active {
+    border: 3px solid lime;
+    display: block;
+}
+
+.thumb_slide_item.active {
+    border: 3px solid purple;
+}
+
+.show-pin, .show-go {
+    visibility: hidden;
+}
+
+.thumb_slide_item.active .show-pin,
+.thumb_slide_item.active .show-go {
+    visibility: visible ;
+}
+    </style>
+</head>
+<body>
+    <section class="hiddendatacontent" style="display: none">
+    <div class="main_fade_slide">
+
+        <div class="main_slide_item" data-link="https://en.wikipedia.org/wiki/Ascot,_Berkshire"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/ascot/ascot_destination_header_desktop.webp);">
+            <img class="main_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/ascot/Ascot.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/Ascot,_Berkshire"></a>
+        </div>
+
+        <div class="mobile_slide_item" data-link="https://en.wikipedia.org/wiki/Ascot,_Berkshire"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/ascot/ascot_destination_header_desktop.webp);">
+            <img class="mobile_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/ascot/Ascot.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/Ascot,_Berkshire"></a>
+        </div>
+
+        <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+
+
+            <div class="thumb">
+                <img src="https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/ascot/ascot_destination_header_mobile.webp"
+                    alt="Location Thumbnail" title="Ascot">
+                <a class="thumb_link" href="https://en.wikipedia.org/wiki/Ascot,_Berkshire"
+                    data-link="https://en.wikipedia.org/wiki/Ascot,_Berkshire">Go</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="main_fade_slide">
+
+        <div class="main_slide_item" data-link="https://en.wikipedia.org/wiki/Bath,_Somerset"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/bath/Bath_Header.jpg);">
+            <img class="main_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Bath.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/Bath,_Somerset"></a>
+        </div>
+
+        <div class="mobile_slide_item" data-link="https://en.wikipedia.org/wiki/Bath,_Somerset"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/bath/BathLoop_desktop.webp);">
+            <img class="mobile_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Bath.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/Bath,_Somerset"></a>
+        </div>
+
+        <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+
+
+            <div class="thumb">
+                <img src="https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/bath/Bath_Header_mobile.jpg"
+                    alt="Location Thumbnail" title="Bath">
+                <a class="thumb_link" href="https://en.wikipedia.org/wiki/Bath,_Somerset"
+                    data-link="https://en.wikipedia.org/wiki/Bath,_Somerset">Go</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="main_fade_slide">
+
+        <div class="main_slide_item" data-link="https://en.wikipedia.org/wiki/Beckenham"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/beckenham_desktop.webp);">
+            <img class="main_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Beckhnham.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/Beckenham"></a>
+        </div>
+
+        <div class="mobile_slide_item" data-link="https://en.wikipedia.org/wiki/Beckenham"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/beckenham_mobile.webp);">
+            <img class="mobile_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Beckhnham.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/Beckenham"></a>
+        </div>
+
+        <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+
+
+            <div class="thumb">
+                <img src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/beckenham_thumbnail.webp"
+                    alt="Location Thumbnail" title="Beckenham">
+                <a class="thumb_link" href="https://en.wikipedia.org/wiki/Beckenham"
+                    data-link="https://en.wikipedia.org/wiki/Beckenham">Go</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="main_fade_slide">
+
+        <div class="main_slide_item" data-link="https://en.wikipedia.org/wiki/Bournemouth"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/bournemouth/Young-Learners_Bournemouth-Banner-2.jpg);">
+            <img class="main_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Bournemouth.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/Bournemouth"></a>
+        </div>
+
+        <div class="mobile_slide_item" data-link="https://en.wikipedia.org/wiki/Bournemouth"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/bournemouth/Young-Learners_Bournemouth-Banner-2.jpg);">
+            <img class="mobile_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Bournemouth.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/Bournemouth"></a>
+        </div>
+
+        <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+
+
+            <div class="thumb">
+                <img src="https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/bournemouth/Bournemouth_Header_mobile.jpg"
+                    alt="Location Thumbnail" title="Bournemouth">
+                <a class="thumb_link" href="https://en.wikipedia.org/wiki/Bournemouth"
+                    data-link="https://en.wikipedia.org/wiki/Bournemouth">Go</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="main_fade_slide">
+
+        <div class="main_slide_item" data-link="https://en.wikipedia.org/wiki/Caterham"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/caterham/CaterhamLoop_desktop.webp);">
+            <img class="main_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Caterham.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/Caterham"></a>
+        </div>
+
+        <div class="mobile_slide_item" data-link="https://en.wikipedia.org/wiki/Caterham"
+            style="background-image:url();">
+            <img class="mobile_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Caterham.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/Caterham"></a>
+        </div>
+
+        <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+
+
+            <div class="thumb">
+                <img src="https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/caterham/Caterham_Location_Header2_mobile.jpg"
+                    alt="Location Thumbnail" title="Caterham">
+                <a class="thumb_link" href="https://en.wikipedia.org/wiki/Caterham"
+                    data-link="https://en.wikipedia.org/wiki/Caterham">Go</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="main_fade_slide">
+
+        <div class="main_slide_item" data-link="https://en.wikipedia.org/wiki/London"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/central-london_desktop.webp);">
+            <img class="main_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/CentralLondon.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/London"></a>
+        </div>
+
+        <div class="mobile_slide_item" data-link="https://en.wikipedia.org/wiki/London"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/central-london_mobile.webp);">
+            <img class="mobile_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/CentralLondon.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/London"></a>
+        </div>
+
+        <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+
+
+            <div class="thumb">
+                <img src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/central-london_thumbnail.webp"
+                    alt="Location Thumbnail" title="C London">
+                <a class="thumb_link" href="https://en.wikipedia.org/wiki/London"
+                    data-link="https://en.wikipedia.org/wiki/London">Go</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="main_fade_slide">
+
+        <div class="main_slide_item" data-link="https://en.wikipedia.org/wiki/Malibu"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/malibu/Young-Learners_Malibu_Last-banner-on-page.jpg);">
+            <img class="main_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Malibu.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/Malibu"></a>
+        </div>
+
+        <div class="mobile_slide_item" data-link="https://en.wikipedia.org/wiki/Malibu"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/malibu/Young-Learners_Malibu_Last-banner-on-page.jpg);">
+            <img class="mobile_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Malibu.svg"
+                alt="Location banner">
+            <a href="https://en.wikipedia.org/wiki/Malibu"></a>
+        </div>
+
+        <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+
+
+            <div class="thumb">
+                <img src="https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/malibu/Malibu_Header_mob.jpg"
+                    alt="Location Thumbnail" title="Malibu">
+                <a class="thumb_link" href="https://en.wikipedia.org/wiki/Malibu"
+                    data-link="https://en.wikipedia.org/wiki/Malibu">Go</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="main_fade_slide">
+
+        <div class="main_slide_item" data-link="http://kingseducation.com/uk-uni"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/moreton-hall/MoretonHall_Header.jpg);">
+            <img class="main_img_div"
+                src="https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/moreton-hall/MoretonHall.svg"
+                alt="Location banner">
+            <a href="http://kingseducation.com/uk-uni"></a>
+        </div>
+
+        <div class="mobile_slide_item" data-link="http://kingseducation.com/uk-uni"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/moreton-hall/MoretonHall_Header.jpg);">
+            <img class="mobile_img_div"
+                src="https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/moreton-hall/MoretonHall.svg"
+                alt="Location banner">
+            <a href="http://kingseducation.com/uk-uni"></a>
+        </div>
+
+        <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+
+
+            <div class="thumb">
+                <img src="https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/moreton-hall/MoretonHall_Header_mob.jpg"
+                    alt="Location Thumbnail" title="Moreton Hall">
+                <a class="thumb_link" href="http://kingseducation.com/uk-uni"
+                    data-link="http://kingseducation.com/uk-uni">Go</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="main_fade_slide">
+
+        <div class="main_slide_item" data-link="http://kingseducatiom.com/us-uni"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/new-york/Young-Learners-New-York-Concordia-Main-Image.jpg);">
+            <img class="main_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/NewYork.svg"
+                alt="Location banner">
+            <a href="http://kingseducatiom.com/us-uni"></a>
+        </div>
+
+        <div class="mobile_slide_item" data-link="http://kingseducatiom.com/us-uni"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/new-york/NewYork_location_banner.jpg);">
+            <img class="mobile_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/NewYork.svg"
+                alt="Location banner">
+            <a href="http://kingseducatiom.com/us-uni"></a>
+        </div>
+
+        <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+
+
+            <div class="thumb">
+                <img src="https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/new-york/NYLoop_mobile.webp"
+                    alt="Location Thumbnail" title="NYC">
+                <a class="thumb_link" href="http://kingseducatiom.com/us-uni"
+                    data-link="http://kingseducatiom.com/us-uni">Go</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="main_fade_slide">
+
+        <div class="main_slide_item" data-link="http://kingseducation.com/unk-uni"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/oxford_mobile.webp);">
+            <img class="main_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Oxford.svg"
+                alt="Location banner">
+            <a href="http://kingseducation.com/unk-uni"></a>
+        </div>
+
+        <div class="mobile_slide_item" data-link="http://kingseducation.com/unk-uni"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/oxford/Oxford_Activities_Banner.jpg);">
+            <img class="mobile_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Oxford.svg"
+                alt="Location banner">
+            <a href="http://kingseducation.com/unk-uni"></a>
+        </div>
+
+        <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+
+
+            <div class="thumb">
+                <img src="https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/oxford/Oxford_Header_mobile.jpg"
+                    alt="Location Thumbnail" title="Oxford">
+                <a class="thumb_link" href="http://kingseducation.com/unk-uni"
+                    data-link="http://kingseducation.com/unk-uni">Go</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="main_fade_slide">
+
+        <div class="main_slide_item" data-link="http://kingseducation.com"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/bournemouth/BournemouthLoop_desktop.webp);">
+            <img class="main_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Bournemouth.svg"
+                alt="Location banner">
+            <a href="http://kingseducation.com"></a>
+        </div>
+
+        <div class="mobile_slide_item" data-link="http://kingseducation.com"
+            style="background-image:url(https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/bournemouth/Bournemouth_Header_mobile.jpg);">
+            <img class="mobile_img_div" src="https://dev.kingseducation.com/assets/images/assets/young-learners/landing/destinations/Bournemouth.svg"
+                alt="Location banner">
+            <a href="http://kingseducation.com"></a>
+        </div>
+
+        <div class="hidden_thumb_slide secondary_thumbnail_slider" style="display:none">
+
+
+            <div class="thumb">
+                <img src="https://dev.kingseducation.com/assets/images/assets/young-learners/destinations/bournemouth/BournemouthLoop_mobile.webp"
+                    alt="Location Thumbnail" title="BNMTH">
+                <a class="thumb_link" href="http://kingseducation.com" data-link="http://kingseducation.com">Go</a>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+<!-- forked from personal exp account  -->
+<main>
+        <section class="main_fader">
+          <div class="main_slide_inner"></div>
+        </section>
+        <section class="thumb_carousel">
+          <div class="thumb_slide_inner"></div>
+          <div class="thumb_slider_button">
+            <a href="#" class="slide-arrow" id="slide-arrow-prev">&#8249;</a>
+            <a href="#" class="slide-arrow" id="slide-arrow-next">&#8250;</a>
+          </div>
+        </section>
+      </main>
+
+    <script>
+      
+window.addEventListener("DOMContentLoaded", function(){
+  
+  var slides = document.querySelectorAll('.main_fade_slide');
+  console.log('Number of slides found:', slides.length);
+  
+  var jsonArray = [];
+
+const mainSlide = document.querySelector(".main_slide_inner");
+const thumbSlide = document.querySelector(".thumb_slide_inner");
+const thumbSliderButton = document.querySelector(".thumb_slider_button");
+const thumbSlideItems = document.querySelectorAll(".thumb_slide_item");
+
+    
+let currentSlideIndex = 0;
+let currentIndex = 0;
+let currentThumbIndex = 0;
+
+  slides.forEach((slide, index) => {
+    
+    
+       var mainSlideItem = slide.querySelector('.main_slide_item');
+    var mainImgDiv = slide.querySelector('.main_img_div');
+    var mobileSlideItem = slide.querySelector('.mobile_slide_item');
+    var mobileImgDiv = slide.querySelector('.mobile_img_div');
+    var thumbLink = slide.querySelector('.thumb_link');
+    var thumbImg = slide.querySelector('.thumb img');
+
+    // error checking
+    if (!mainSlideItem || !mainImgDiv || !mobileSlideItem || !mobileImgDiv || !thumbLink || !thumbImg) {
+      console.error('Missing elements in slide number', index);
+      return;
+    }
+
+    var jsonObj = {
+      desktop: {
+        link: mainSlideItem.getAttribute('data-link'),
+        backgroundImage: mainSlideItem.style.backgroundImage.slice(5, -2).replace(/"/g, ""),
+        image: mainImgDiv.src,
+        altText: mainImgDiv.alt
+      },
+      mobile: {
+        link: mobileSlideItem.getAttribute('data-link'),
+        backgroundImage: mobileSlideItem.style.backgroundImage.slice(5, -2).replace(/"/g, ""),
+        image: mobileImgDiv.src,
+        altText: mobileImgDiv.alt
+      },
+      thumbnail: {
+        link: thumbLink.getAttribute('href'),
+        image: thumbImg.src,
+        altText: thumbImg.alt,
+        title: thumbImg.title
+      }
+    };
+    jsonArray.push(jsonObj);
+  });
+
+  if (jsonArray.length === 0) {
+    console.error('No slides were added to the array. Check the class names and HTML structure.');
+    return;
+  }
+
+  function createCarousels(slidesArray) {
+
+    const createDesktopSlide = (slide) => `
+      <div class="main_slide_item" style="background-image: url('${slide.desktop.backgroundImage}');">
+        <img class="main_img_div" src="${slide.desktop.image}" alt="${slide.desktop.altText}">
+        <a href="${slide.desktop.link}"></a>
+      </div>
+    `;
+
+    const createThumbnailSlide = (slide) => `
+      <div class="thumb_slide_item">
+        <div class="thumb_item_location_wrapper">
+          <div class="ThumbImgTop_Pointer thumbnail_show_pin"></div>
+          <p class="h5 location_title">${slide.thumbnail.title}</p>
+          <img src="${slide.thumbnail.image}" alt="${slide.thumbnail.altText}" title="${slide.thumbnail.title}">
+  
+          <a href="${slide.thumbnail.link}" class="thumb_link thumb-cta-link-dynamic show-go">
+            <span class="go-button">Go</span>
+            <i class="fa fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    `;
+
+    let desktopCarouselHTML = '<div class="desktop_carousel">';
+    let thumbnailCarouselHTML = '<div class="thumbnail_carousel">';
+
+    slidesArray.forEach((slide) => {
+      desktopCarouselHTML += createDesktopSlide(slide);
+      thumbnailCarouselHTML += createThumbnailSlide(slide);
+    });
+
+    desktopCarouselHTML += '</div>';
+    thumbnailCarouselHTML += '</div>';
+
+    return {
+      desktopCarouselHTML,
+      thumbnailCarouselHTML
+    };
+
+  // Function to create HTML for main slide
+  const createMainSlideHTML = (slide) => `
+    <div class="main_slide_item" style="background-image: url('${slide.desktop.backgroundImage}');">
+      <img class="main_img_div" src="${slide.desktop.image}" alt="${slide.desktop.altText}">
+      <a href="${slide.desktop.link}"></a>
+    </div>
+  `;
+
+  // Function to create HTML for thumbnail slide
+  const createThumbSlideHTML = (slide) => `
+  <div class="thumb_slide_item">
+        <div class="thumb_item_location_wrapper">
+          <div class="ThumbImgTop_Pointer thumbnail_show_pin"></div>
+          <p class="h5 location_title">${slide.thumbnail.title}</p>
+          <img src="${slide.thumbnail.image}" alt="${slide.thumbnail.altText}" title="${slide.thumbnail.title}">
+  
+          <a href="${slide.thumbnail.link}" class="thumb_link thumb-cta-link-dynamic show-go">
+            <span class="go-button">Go</span>
+            <i class="fa fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+  `;
+
+    // Create HTML for main slide
+    const mainSlideHTML = jsonArray.map(createMainSlideHTML).join('');
+  mainSlide.innerHTML = mainSlideHTML;
+
+  // Create HTML for thumbnail slide
+  const thumbSlideHTML = jsonArray.map(createThumbSlideHTML).join('');
+  thumbSlide.innerHTML = thumbSlideHTML;
+
+
+  }
+    
+    // const mainSlideItem = document.createElement("div");
+//     mainSlideItem.classList.add("main_slide_item");
+    
+//     const thumbSlideItem = document.createElement("div");
+//     thumbSlideItem.classList.add("thumb_slide_item");
+
+//     mainSlideItem.innerHTML = `
+//     <div class="location_item">
+//       <div class="main-image-slide" style="background-image: url('${location.image}')">
+//         <p class="h5 location-title">${location.title}</p>
+//         <a href="${location.ctaLink}" class="cta-link"><span>Go</span></a>
+//       </div>
+//       </div>
+//     `;
+
+//     mainSlide.appendChild(mainSlideItem);
+    
+//     thumbSlideItem.innerHTML = `
+//     <div class="thumb_location_item">
+//     <div class="map_pin show-pin">&#9906;</div>
+//       <div class="thumb-image-slide" style="background-image: url('${location.image}')">
+//         <p class="h5 thumb-location-title">${location.title}</p>
+//         <a href="${location.ctaLink}" class="thumb-cta-link show-go"><span class="go-button">Go</span><span class="go-arrow">&#8702;</span></a>
+//       </div>
+//       </div>
+//     `;
+ 
+//     thumbSlide.appendChild(thumbSlideItem);
+    
+  });
+
+  function activateMainSlide(index) {
+    const mainSlideItems = document.querySelectorAll(".main_slide_item");
+    mainSlideItems.forEach((item) => item.classList.remove("active"));
+    mainSlideItems[index].classList.add("active");
+  }
+  
+  function activateThumbnailSlide(index) {
+    const thumbSlideItems = document.querySelectorAll(".thumb_slide_item");
+    thumbSlideItems.forEach((item) => item.classList.remove("active"));
+    thumbSlideItems[index].classList.add("active");
+
+    // maximum scroll position to ensure the last items are fully visible
+    const thumbSlideItemWidth = thumbSlideItems[0].offsetWidth;
+    const thumbSliderButtonWidth = thumbSliderButton.offsetWidth;
+    const totalWidth = thumbSlideItemWidth * locations.length;
+    const maxScrollPosition = totalWidth - thumbSliderButtonWidth;
+
+    // scroll position for the current item
+    let scrollPosition = thumbSlideItemWidth * index;
+    const centerOffset = thumbSliderButtonWidth / 1.15;
+
+    // Adjust scrollPosition if the current item is one of the last few items
+    if (index >= locations.length - 1) {
+      scrollPosition = maxScrollPosition;
+    } else if (index > 0) {
+      scrollPosition -= centerOffset;
+    }
+
+    // make sure the scrollPosition stays within bounds
+    scrollPosition = Math.max(0, Math.min(maxScrollPosition, scrollPosition));
+
+    thumbSlide.scrollLeft = scrollPosition;
+  }
+
+  function activateSlide(index) {
+    activateMainSlide(index); // Apply active class to main slides
+    activateThumbnailSlide(index); // Apply active class to thumbnail slides
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % locations.length;
+    activateSlide(currentIndex);
+  }
+
+  let slideInterval = setInterval(nextSlide, 2000);
+
+  thumbSlide.addEventListener("mouseenter", function () {
+    clearInterval(slideInterval);
+  });
+
+  thumbSlide.addEventListener("mouseleave", function () {
+    slideInterval = setInterval(nextSlide, 2000);
+  });
+
+  activateSlide(currentIndex);
+
+  // Add these variables to your existing code
+  const prevButton = document.getElementById("slide-arrow-prev");
+  const nextButton = document.getElementById("slide-arrow-next");
+
+  // Add event listeners to the previous and next buttons
+  prevButton.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + locations.length) % locations.length;
+    activateSlide(currentIndex);
+  });
+
+  nextButton.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % locations.length;
+    activateSlide(currentIndex);
+  });
+
+});
+    </script>
+</body>
+</html>
